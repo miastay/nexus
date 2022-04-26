@@ -13,7 +13,7 @@ return (
     <div class="main">
         <Navbar switcher={switchPage}/>
         <div class="page">
-            {(page === 'home') && <Home/>}
+            {(page === 'home') && <Home layout={'abba'}/>}
             {(page === 'eheh') && <div>eheh</div>}
         </div>
     </div>
