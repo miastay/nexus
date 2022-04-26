@@ -1,0 +1,83 @@
+$padding: 1rem;
+$color-1: #5755cc;
+$color-2: #b1b0e8;
+$color-3: hsl(241, 54%, 37%);
+$shadow: rgba(49, 49, 49, 0.61);
+
+* {
+    font-family: "Nunito", sans-serif;
+}
+@mixin theme-color() {
+    color: white;
+    background: $color-1;
+}
+@mixin bw() {
+    color: black;
+    background: white;
+}
+
+//////////////////
+
+.nav {
+    @include theme-color;
+
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    box-shadow: 0px 0px 15px $shadow;
+
+    .left {
+        width: 20%;
+        min-width: 175px;
+        height: 100%;
+        align-self: flex-start;
+        * {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .right {
+        width: 15%;
+        height: 100%;
+        align-self: flex-end;
+    }
+    .mid {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        .btn {
+            @include theme-color;
+            height: 100%;
+            border: none;
+            width: 100%;
+            font-size: 120%;
+            &:hover {
+                background: $color-3;
+            }
+            transition: background 0.5s ease;
+        }
+    }
+}
+
+//////////////////
+
+.logo {
+    width: 100%;
+    height: 100%;
+    .image {
+        background: url('../public/logo.png');
+        background-size: 60%;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+//////////////////
+
+.page {
+    height: 150vw;
+    padding: 2 * $padding;
+}
