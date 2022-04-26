@@ -9,8 +9,8 @@ Interactive fullstack web application for student collaboration; built on Node.j
 `git clone https://github.com/rytaylor/nexus.git`
 2. In the installed directory, install the associated node dependencies:
 `npm i`
-3. To run the application locally, run the script `serve.sh` in the top-level directory.
-4. Point your browser to `localhost:3000` to see the running application.
+3. To run the application locally, type `npm run dev`.
+4. Point your browser to `localhost:3000`.
 
 ## Contributors
 Ryan Taylor, Saayujh Ramanathan, Aaryaman Bhute, Matt Yeung
