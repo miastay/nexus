@@ -4,7 +4,7 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 
-const moduleList = [<Module name={'module 1'} searchable/>, <Module name={'module 2'} searchable/>, <Module name={'different'} searchable/>]
+const moduleList = [<Module name={'module 1'} searchable/>, <Module name={'this has a bunch of strings in its name'} searchable/>, <Module name={'different'} searchable/>]
 
 const Home = () => {
 

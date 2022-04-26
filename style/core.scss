@@ -10,6 +10,7 @@ $color-2: #b1b0e8;
 $color-3: #2d2b91;
 $color-4: #1b1a56;
 $color-5: #eeeeee;
+$color-6: hsl(241, 54%, 65%);
 
 $shadow: #3131319c;
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
@@ -42,6 +43,25 @@ $shadow: #3131319c;
     background: white;
     @include border(1px);
 }
+@mixin button() {
+    @include theme-color;
+    height: 100%;
+    border: none;
+    width: 100%;
+    font-weight: 200;
+    &:hover {
+        background: $color-3;
+        box-shadow: inset 0px -4px 0px white;
+        font-weight: 400;
+    }
+    &:active {
+        background: $color-4;
+    }
+    &.on {
+        box-shadow: inset 0px -10px 0px $color-6;
+    }
+    transition: background 0.5s ease, box-shadow 0.5s ease, font-weight 0.2s ease;
+}
 
 body {
     margin: 0 !important;
@@ -71,31 +91,22 @@ body {
         }
     }
     .right {
-        width: 15%;
+        width: 13%;
         height: 100%;
         align-self: flex-end;
+        * {
+            width: 100%;
+            height: 100%;
+        }
     }
     .mid {
-        width: 100%;
+        width: 80%;
         height: 100%;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         .btn {
-            @include theme-color;
-            height: 100%;
-            border: none;
-            width: 100%;
+            @include button;
             font-size: 160%;
-            font-weight: 200;
-            &:hover {
-                background: $color-3;
-                box-shadow: inset 0px -4px 0px white;
-                font-weight: 400;
-            }
-            &:active {
-                background: $color-4;
-            }
-            transition: background 0.5s ease, box-shadow 0.5s ease, font-weight 0.2s ease;
         }
     }
 }
@@ -164,3 +175,37 @@ body {
 }
 
 //////////////////
+
+.profile {
+    height: 100%;
+    &.small {
+        display: flex;
+        button {
+            @include button;
+            background: $color-3;
+            border: none;
+            width: 100%;
+            display: flex;
+            padding: $padding $padding-dbl;
+            * {
+                align-self: center;
+                justify-self: center;
+                align-items: center;
+                justify-content: center;
+            }
+            img {
+                max-height: 60px;
+                max-width: 60px;
+                height: auto;
+                width: auto;
+                border-radius: 60px;
+            }
+            .username {
+                display: flex;
+                font-size: 150%;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
