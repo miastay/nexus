@@ -12,6 +12,8 @@ $color-4: #1b1a56;
 $color-5: #eeeeee;
 $color-6: hsl(241, 54%, 65%);
 
+$color-italic: lightgray;
+
 $nav-height: 100px;
 
 $shadow: #3131319c;
@@ -39,7 +41,7 @@ $shadow: #3131319c;
     align-items: center;
 }
 @mixin module() {
-    min-height: 100px;
+    display: flex;
     border-radius: $border-r;
     padding: $border-r;
     background: white;
@@ -67,6 +69,11 @@ $shadow: #3131319c;
 
 body {
     margin: 0 !important;
+}
+
+h1, h2, h3 {
+    margin-block-end: 0;
+    margin-block-start: 0;
 }
 
 //////////////////
@@ -146,20 +153,50 @@ body {
         max-height: 100%;
         overflow: hidden;
     }
+    &.post {
+        grid-template-columns: 1fr 8fr 4fr;
+        grid-gap: $padding-dbl;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+    }
 }
 
 .container {
     display: flex;
     flex-direction: column;
     padding: $padding;
-    background: $color-5;
-    box-shadow: inset 0px 0px 2px $shadow;
-    overflow-y: scroll;
+    &.in {
+        background: $color-5;
+        box-shadow: inset 0px 0px 2px $shadow;
+    }
+    &.border {
+        border: solid 1px $color-5;
+    }
 }
 
 .module {
     @include module;
     margin-bottom: $padding;
+    flex-direction: column;
+    .title {
+        width: 100%;
+        height: 25%;
+    }
+    .body {
+        width: 100%;
+        height: 75%;
+    }
+    .infostr {
+        justify-self: flex-end;
+        align-self: flex-end;
+    }
+}
+.infostr {
+    color: $color-italic;
+    font-style: italic;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 //////////////////

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from './navbar';
 import Home from './home';
+import { addPost, getPost, getPosts } from './query';
 
 function Index() {
   const [page, setPage] = useState('home');
@@ -11,12 +12,20 @@ function Index() {
       window.location.hash = page;
   }
 
+  const addp = () => {
+    addPost({title: 'title!!!', author: 'author1', body: 'bodytext1'});
+  }
+
+  const geta = () => {
+    getPosts().then((data) => console.log(data));
+  }
+
 return (
     <div class="main">
         <Navbar switcher={switchPage} profile={profile} currentPage={page}/>
         <div class="page">
             {(page === 'home') && <Home layout={'abba'}/>}
-            {(page === 'eheh') && <div>eheh</div>}
+            {(page === 'eheh') && <div><input type="button" onClick={() => addp()}>add post</input></div>}
         </div>
     </div>
 )
