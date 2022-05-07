@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 const SearchBar = ({execute}) => {
     return (
         <div class="bar">
-            <input class="in" placeholder="search for anything..." onChange={(evt) => execute(evt)}></input>
+            <input class="in" placeholder="search for anything..." onChange={(evt) => execute(evt.srcElement.value)}></input>
         </div>
     )
 }

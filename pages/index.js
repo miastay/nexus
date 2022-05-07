@@ -8,6 +8,7 @@ function Index() {
 
   const switchPage = (page) => {
       setPage(page);
+      window.location.hash = page;
   }
 
 return (

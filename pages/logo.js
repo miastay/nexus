@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const Logo = () => {
+const Logo = ({switcher}) => {
 
     //this is horrible react practice, but it looks very nice
     const animScroll = () => {
@@ -11,9 +11,13 @@ const Logo = () => {
         }, 10);
     }
 
+    const goHome = () => {
+        switcher('home');
+    }
+
 
     return (
-        <div class="logo" onClick={() => animScroll()}>
+        <div class="logo" onClick={() => goHome()}>
             <div class="image"/>
         </div>
     )
