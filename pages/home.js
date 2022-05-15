@@ -13,25 +13,26 @@ const Home = () => {
     const [query, setQuery] = useState("");
     const [moduleList, setModuleList] = useState([]);
 
-    const router = useRouter()
-
     const generateModules = () => {
         let modules = [];
-        //console.log('fetching posts...')
         getPosts().then((posts) => {
             posts.forEach(x => {
-                modules.push(<Module title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} id={x.id} query={query} searchable/>)
+                modules.push(<Module title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} score={x.data.score} id={x.id} query={query} searchable/>)
             })
-            //console.log('posts retrieved')
+            modules.sort((a, b) => b.props.date - a.props.date)
             setModuleList(modules);
         })
     }
 
+    // useEffect(() => {
+    //     window.addEventListener('load', generateModules());
+    // })
+
     return (
       <div class={'grid top'}>
           <SearchModule query={setQuery} />
-          {generateModules()}
-          <Container type={'modules'} modules={moduleList}/>
+          <Container type={'modules'} modules={moduleList} refresh={() => generateModules()}/>
+          <button value={"refresh posts"} onClick={() => generateModules()} />
           <Container />
       </div>
     )

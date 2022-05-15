@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const Container = ({type, modules, comments}) => {
+const Container = ({type, modules, refresh, comments}) => {
 
     let elem;
     switch(type) {
@@ -13,7 +13,7 @@ const Container = ({type, modules, comments}) => {
         } break;
         case 'modules' : {
             elem =  (   <div>
-                            <h2>Posts</h2><br/>
+                            <h2>Recent Posts</h2><input type="button" class="refresh" value="Refresh"></input><br/>
                             <div class="container stretch in">
                                 {modules}
                             </div>

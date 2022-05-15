@@ -12,6 +12,8 @@ try {
     db = getFirestore(app);
 } catch(err) {
     console.log(err)
+    console.log('///////////////')
+    console.log("You most likely don't have the database config file downloaded. Ask Ryan for a copy! rtaylor7@g.ucla.edu")
 }
 
 export async function addPost({title, author, body}) {
@@ -28,12 +30,16 @@ export async function addPost({title, author, body}) {
 }
 
 export async function getPost({id}) {
-    const docRef = doc(db, 'posts', id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        return docSnap.data();
-    } else {
-        console.log(`Error retrieving post ${id}`);
+    try {
+        const docRef = doc(db, 'posts', id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data();
+        } else {
+            console.log(`Error retrieving post ${id}`);
+        }
+    } catch(err) {
+        console.log(err);
     }
 }
 

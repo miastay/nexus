@@ -25,6 +25,7 @@ function Posts() {
                 setPost(<Post title={data.title} body={data.body} author={data.author} time={data.date} scores={data.score} id={id} />);
             } catch(err) {
                 console.log(`Error retrieving post '${id}'`)
+                router.push(`/#home`);
             }
         });
     }
@@ -40,7 +41,6 @@ function Posts() {
                     </div>
                     <Container type={'comments'} />
                 </div>
-                
             </div>
         </div>
     )
