@@ -193,6 +193,7 @@ h1, h2, h3 {
     .title {
         width: 100%;
         height: 25%;
+        font-size: 150%;
         cursor: pointer;
     }
     .body {
@@ -204,14 +205,17 @@ h1, h2, h3 {
         width: 100%;
         flex-direction: row;
         margin-block-start: 0;
-        margin-block-end: 0;
+        margin-block-end: -1 * $padding;
         .fingerprint {
             text-align: right;
             font-style: italic;
+            color: $color-6;
             width: 75%;
         }
         .score {
             color: $color-1;
+            font-weight: bolder;
+            font-size: 110%;
             text-align: left;
             width: 25%;
         }
@@ -225,9 +229,8 @@ h1, h2, h3 {
 //////////////////
 
 .search {
-    height: 50px;
     .bar {
-        height: 100%;
+        height: 50px;
         display: flex;
         flex-direction: row;
         justify-content: left;
@@ -239,6 +242,14 @@ h1, h2, h3 {
             border-radius: $border-r;
             padding: 0 $border-r;
             border: solid 1px black;
+        }
+    }
+    .sort {
+        margin-top: $padding;
+        height: 200%;
+        select {
+            padding: $padding-hlf;
+            margin-left: $padding-hlf;
         }
     }
 }

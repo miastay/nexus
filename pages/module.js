@@ -9,7 +9,6 @@ const Module = ({title, body, author, date, scores, id, query}) => {
     const charLim = 150;
 
     const matches = () => {
-        console.log(query)
         return title.indexOf(query) != -1;
     }
 

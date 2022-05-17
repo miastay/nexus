@@ -7,11 +7,13 @@ const SearchBar = ({execute, setSort}) => {
             <div class="bar">
                 <input class="in" placeholder="search for anything..." onChange={(evt) => execute(evt.srcElement.value)}></input>
             </div>
-            <label for="sortby">Sort Posts:</label>
+            <div class="sort">
+            <label for="sortby">Sort By:</label>
             <select name="sortby" onChange={(e) => setSort(e.target.value)}>
-                <option value="date">Date</option>
-                <option value="score">Score</option>
+                <option value="date">Most Recent</option>
+                <option value="score">Score, High to Low</option>
             </select>
+            </div>
         </div>
     )
 }
@@ -20,6 +22,7 @@ const SearchModule = ({query, setSort}) => {
 
     return (
       <div class="search">
+          <h2>Search</h2><br/>
           <SearchBar execute={query} setSort={setSort}/>
       </div>
     )
