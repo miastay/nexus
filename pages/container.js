@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const Container = ({type, modules, refresh, comments}) => {
+const Container = ({type, modules, query, refresh, comments}) => {
 
     let elem;
     switch(type) {
@@ -14,8 +14,12 @@ const Container = ({type, modules, refresh, comments}) => {
         case 'modules' : {
             elem =  (   <div>
                             <h2>Recent Posts</h2><input type="button" class="refresh" value="Refresh"></input><br/>
-                            <div class="container stretch in">
-                                {modules}
+                            <div class="container stretch in scroll">
+                                {modules && modules.map((x, i) => {
+                                    return (x.props.title.indexOf(query) != -1 ||
+                                            x.props.body.indexOf(query) != -1
+                                    ? x : null);
+                                })}
                             </div>
                         </div>
                     )

@@ -16,7 +16,7 @@ try {
     console.log("You most likely don't have the database config file downloaded. Ask Ryan for a copy! rtaylor7@g.ucla.edu")
 }
 
-export async function addPost({title, author, body}) {
+export async function addPost({title, author, body, result}) {
     console.log('adding post')
     const docRef = await addDoc(collection(db, "posts"), 
         {
@@ -24,12 +24,13 @@ export async function addPost({title, author, body}) {
             author: author,
             body: body,
             date: Timestamp.fromDate(new Date()),
-            score: [0, 0]
+            score: {'up': [], 'down': []}
         }
-    );
+    ).then((data) => {result(data)});
 }
 
 export async function getPost({id}) {
+    console.log("get one");
     try {
         const docRef = doc(db, 'posts', id);
         const docSnap = await getDoc(docRef);
@@ -44,11 +45,16 @@ export async function getPost({id}) {
 }
 
 export async function getPosts() {
+    console.log("get all");
     const querySnapshot = await getDocs(collection(db, "posts"));
     let docs = [];
     querySnapshot.forEach((doc) => {
         docs.push({'id': doc.id, 'data': doc.data()});
     });
     return docs;
+}
+
+export async function tryVote({id, delta}) {
+
 }
 

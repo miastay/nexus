@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from './navbar';
 import Home from './home';
 import Post from './post';
 import Container from './container';
 import { useRouter } from 'next/router';
-import { getPost } from './query';
+import { getPost, tryVote } from './query';
 
 function Posts() {
 
@@ -22,13 +22,20 @@ function Posts() {
     const generatePostFromID = (id) => {
         getPost({id: id}).then((data) => {
             try {
-                setPost(<Post title={data.title} body={data.body} author={data.author} time={data.date} scores={data.score} id={id} />);
+                setPost(<Post title={data.title} body={data.body} author={data.author} time={data.date} scores={data.score} id={id} vote={voteOnPost}/>);
             } catch(err) {
                 console.log(`Error retrieving post '${id}'`)
                 router.push(`/#home`);
             }
         });
     }
+
+    const voteOnPost = (id, vote) => {
+        tryVote({id: id, delta: vote}).then((data) => {
+            console.log(data);
+        })
+    }
+
     return (
         <div class="main">
             <Navbar switcher={switchPage} profile={profile} currentPage={'posts'}/>
@@ -36,7 +43,7 @@ function Posts() {
                 <div class={'grid post'}>
                     <Container type={'back-sidebar'} />
                     <div class={'container border'}>
-                        {generatePostFromID(postID)}
+                        {post == null ? generatePostFromID(postID) : null}
                         {post}
                     </div>
                     <Container type={'comments'} />

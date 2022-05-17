@@ -26,7 +26,7 @@ const PostForm = ({submit, update}) => {
 
 const Poster = () => {
 
-    const [posted, setPosted] = useState(false);
+    const [posted, setPosted] = useState(-1);
     const [error, setError] = useState("");
     const router = useRouter();
 
@@ -43,7 +43,7 @@ const Poster = () => {
             setError("Body text is required.")
             return;
         }
-        addPost({title: title, author: 'me', body: body}).then(setPosted(true));
+        addPost({title: title, author: 'me', body: body, result: function(data) {console.log(data); setPosted(data.id)}});
     }
 
     const updateValues = ({title, body}) => {
@@ -60,7 +60,7 @@ const Poster = () => {
             <Container type={'back-sidebar'} />
             <div class={'container border'}>
                 <h2>Create a Post</h2><br/><br/>
-                {posted && <div class="message confirmation">Post submitted successfully. <a href={`/post?id=${0}`}>{"Go to the post >>"}</a></div>}
+                {posted != -1 && <div class="message confirmation">Post submitted successfully. <a href={`/posts?id=${posted}`}>{"Go to the post >>"}</a></div>}
                 {error && <div class="message error">{error}</div>}
                 {postForm}
             </div>

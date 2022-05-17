@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const Post = ({id, title, author, time, body, scores}) => {
+const Post = ({id, title, author, time, body, scores, vote}) => {
 
     return (
         <div>
@@ -12,8 +12,8 @@ const Post = ({id, title, author, time, body, scores}) => {
                 <span class={"body"}>{body}</span>
                 <br /><br />
                 <span>
-                    <div>{`Score: ${scores[0] - scores[1]}`}</div>
-                    <div class={'infostr'}>{`(${scores[0]} upvoted, ${scores[1]} downvoted)`}</div>
+                    <div>{`Score: ${scores['up'].length - scores['down'].length}`}</div><button onClick={() => vote(1)}>&uarr;</button><button onClick={() => vote(-1)}>&darr;</button>
+                    <div class={'infostr'}>{`(${scores['up'].length} upvoted, ${scores['down'].length} downvoted)`}</div>
                 </span>
             </div>
             <div id={"comment_section"}>

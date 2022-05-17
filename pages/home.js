@@ -11,17 +11,39 @@ const Home = () => {
 
     //const [liveModules, setLiveModules] = useState(moduleList);
     const [query, setQuery] = useState("");
-    const [moduleList, setModuleList] = useState([]);
+    const [moduleList, setModuleList] = useState(null);
 
     const generateModules = () => {
         let modules = [];
         getPosts().then((posts) => {
             posts.forEach(x => {
-                modules.push(<Module title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} score={x.data.score} id={x.id} query={query} searchable/>)
+                modules.push(<Module title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} scores={x.data.score} id={x.id} query={query} searchable/>)
             })
-            modules.sort((a, b) => b.props.date - a.props.date)
+            modules.sort((a, b) => sorter(a, b, "date"))
             setModuleList(modules);
         })
+    }
+
+    const sorter = (a, b, sort) => {
+        switch(sort) {
+            case "score":
+                return (b.props.scores['up'].length-b.props.scores['down'].length) - (a.props.scores['up'].length-a.props.scores['down'].length);
+            case "date":
+            default:
+                return b.props.date - a.props.date;
+        }
+    }
+
+    const reSort = (sort) => {
+        let modules = moduleList;
+        setModuleList([]);
+        modules.sort((a, b) => sorter(a, b, sort))
+        setModuleList(modules);
+        return;
+    }
+
+    const updateSearch = (querystr) => {
+        setQuery(querystr);
     }
 
     // useEffect(() => {
@@ -30,10 +52,13 @@ const Home = () => {
 
     return (
       <div class={'grid top'}>
-          <SearchModule query={setQuery} />
-          <Container type={'modules'} modules={moduleList} refresh={() => generateModules()}/>
-          <button value={"refresh posts"} onClick={() => generateModules()} />
+          <SearchModule query={updateSearch} setSort={reSort}/>
+          <Container type={'modules'} modules={moduleList} query={query} refresh={() => generateModules()}/>
+          <button onClick={() => {reSort("score")}}/>
           <Container />
+          <div>
+              {moduleList == null ? generateModules() : null}
+          </div>
       </div>
     )
  }
