@@ -3,23 +3,62 @@ import { useEffect } from 'react';
 import SearchModule from './search';
 import Container from './container';
 import Module from './module';
+import { useRouter } from 'next/router';
+import { getPosts } from './query.js';
 
-const moduleList = [<Module name={'module 1'} searchable/>, <Module name={'this has a bunch of strings in its name'} searchable/>, <Module name={'different'} searchable/>]
 
 const Home = () => {
 
-    const [liveModules, setLiveModules] = useState(moduleList);
+    //const [liveModules, setLiveModules] = useState(moduleList);
+    const [query, setQuery] = useState("");
+    const [moduleList, setModuleList] = useState(null);
 
-    const runQuery = (evt) => {
-        let str = evt.srcElement.value;
-        str ? setLiveModules(moduleList.filter(x => (x.props.searchable && x.props.name.indexOf(str) != -1))) : setLiveModules(moduleList);
+    const generateModules = () => {
+        let modules = [];
+        getPosts().then((posts) => {
+            posts.forEach(x => {
+                modules.push(<Module title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} scores={x.data.score} id={x.id} query={query} searchable/>)
+            })
+            modules.sort((a, b) => sorter(a, b, "date"))
+            setModuleList(modules);
+        })
     }
+
+    const sorter = (a, b, sort) => {
+        switch(sort) {
+            case "score":
+                return (b.props.scores['up'].length-b.props.scores['down'].length) - (a.props.scores['up'].length-a.props.scores['down'].length);
+            case "date":
+            default:
+                return b.props.date - a.props.date;
+        }
+    }
+
+    const reSort = (sort) => {
+        let modules = moduleList;
+        setModuleList([]);
+        modules.sort((a, b) => sorter(a, b, sort))
+        setModuleList(modules);
+        return;
+    }
+
+    const updateSearch = (querystr) => {
+        setQuery(querystr);
+    }
+
+    // useEffect(() => {
+    //     window.addEventListener('load', generateModules());
+    // })
 
     return (
       <div class={'grid top'}>
-          <SearchModule query={runQuery} />
-          <Container modules={liveModules} />
+          <SearchModule query={updateSearch} setSort={reSort}/>
+          <Container type={'modules'} modules={moduleList} query={query} refresh={() => generateModules()}/>
+          <button onClick={() => {reSort("score")}}/>
           <Container />
+          <div>
+              {moduleList == null ? generateModules() : null}
+          </div>
       </div>
     )
  }

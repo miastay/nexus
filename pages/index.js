@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from './navbar';
 import Home from './home';
+import Poster from './poster';
 
 function Index() {
   const [page, setPage] = useState('home');
@@ -8,6 +9,7 @@ function Index() {
 
   const switchPage = (page) => {
       setPage(page);
+      window.location.hash = page;
   }
 
 return (
@@ -15,7 +17,7 @@ return (
         <Navbar switcher={switchPage} profile={profile} currentPage={page}/>
         <div class="page">
             {(page === 'home') && <Home layout={'abba'}/>}
-            {(page === 'eheh') && <div>eheh</div>}
+            {(page === 'post') && <Poster />}
         </div>
     </div>
 )

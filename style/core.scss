@@ -12,6 +12,14 @@ $color-4: #1b1a56;
 $color-5: #eeeeee;
 $color-6: hsl(241, 54%, 65%);
 
+$color-italic: lightgray;
+$color-good-1: rgb(45, 125, 45);
+$color-good-2: rgb(96, 217, 96);
+$color-bad-1: rgb(183, 62, 62);
+$color-bad-2: rgb(255, 155, 155);
+
+$nav-height: 100px;
+
 $shadow: #3131319c;
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
 
@@ -37,7 +45,7 @@ $shadow: #3131319c;
     align-items: center;
 }
 @mixin module() {
-    height: 100px;
+    display: flex;
     border-radius: $border-r;
     padding: $border-r;
     background: white;
@@ -67,13 +75,18 @@ body {
     margin: 0 !important;
 }
 
+h1, h2, h3 {
+    margin-block-end: 0;
+    margin-block-start: 0;
+}
+
 //////////////////
 
 .nav {
     @include theme-color;
 
     width: 100%;
-    height: 100px;
+    height: $nav-height;
     display: flex;
     flex-direction: row;
     position: sticky;
@@ -127,8 +140,12 @@ body {
 //////////////////
 
 .page {
-    height: 150vw;
+    height: calc(100% - $nav-height - $padding-dbl - $padding-dbl);
     padding: $padding-dbl;
+}
+.main {
+    height: 100vh;
+    width: 100vw;
 }
 
 .grid {
@@ -136,19 +153,73 @@ body {
     &.top {
         grid-template-columns: 3fr 8fr 2fr;
         grid-gap: $padding-dbl;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+    }
+    &.post {
+        grid-template-columns: 1fr 8fr 4fr;
+        grid-gap: $padding-dbl;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
     }
 }
 
 .container {
-    display: grid;
-    grid-gap: $padding;
+    display: flex;
+    flex-direction: column;
     padding: $padding;
-    background: $color-5;
-    box-shadow: inset 0px 0px 2px $shadow;
+    overflow-y: scroll;
+    max-height: 80vh;
+    &.in {
+        background: $color-5;
+        box-shadow: inset 0px 0px 2px $shadow;
+    }
+    &.border {
+        border: solid 1px $color-5;
+    }
+    &.scroll {
+        overflow-y: scroll;
+        height: 80vh;
+    }
 }
 
 .module {
     @include module;
+    margin-bottom: $padding;
+    flex-direction: column;
+    user-select: none;
+    .title {
+        width: 100%;
+        height: 25%;
+        cursor: pointer;
+    }
+    .body {
+        width: 100%;
+        height: 75%;
+    }
+    .info {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        .fingerprint {
+            text-align: right;
+            font-style: italic;
+            width: 75%;
+        }
+        .score {
+            color: $color-1;
+            text-align: left;
+            width: 25%;
+        }
+    }
+}
+.infostr {
+    color: $color-italic;
+    
 }
 
 //////////////////
@@ -205,5 +276,51 @@ body {
                 width: 100%;
             }
         }
+    }
+}
+
+//////////////////
+
+.postform {
+    display: flexbox;
+    flex-direction: row;
+    width: 60%;
+    height: 100%;
+    .title {
+        width: 40%;
+        height: 5%;
+        margin-bottom: calc(3 * $padding);
+    }
+    .body {
+        width: 100%;
+        height: 40%;
+        margin-bottom: calc(3 * $padding);
+    }
+    .submit {
+        width: 20%;
+        height: 5%;
+        font-size: medium;
+    }
+    input {
+        padding: $padding;
+        font-size: larger;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.message {
+    padding: $padding-hlf;
+    margin: $padding-hlf;
+    margin-left: 0;
+    &.confirmation {
+        color: $color-good-1;
+        background: $color-good-2;
+        border: solid 1px $color-good-1;
+    }
+    &.error {
+        color: $color-bad-1;
+        background: $color-bad-2;
+        border: solid 1px $color-bad-1;
     }
 }

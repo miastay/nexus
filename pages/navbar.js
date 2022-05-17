@@ -18,11 +18,11 @@ const Navbar = ({switcher, profile, currentPage}) => {
     return (
       <div class="nav">
         <div class="left">
-            <Logo />
+            <Logo switcher={switcher}/>
         </div>
         <div class="mid">
             <Navpage page="home" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="eheh" switcher={switcher} currentPage={currentPage}/>
+            <Navpage page="post" switcher={switcher} currentPage={currentPage}/>
             <Navpage page="page" switcher={switcher} currentPage={currentPage}/>
             <Navpage page="last one" switcher={switcher} currentPage={currentPage}/>
         </div>
