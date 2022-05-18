@@ -11,12 +11,13 @@ const Leaderboard = () => {
 
     const getUsers = () => {//temp
         let users =
-        [{"firstname":"john", "lastname": "judah", "interactions": {"comments": [1, 2, 3, 4, 5], "posts": [1, 2, 3, 4, 5]}, "password": "temp", "session": "hassed_session"}, 
+        [{"firstname":"john", "lastname": "stevens", "interactions": {"comments": [1, 2, 3, 4, 5], "posts": [1, 2, 3, 4, 5]}, "password": "temp", "session": "hassed_session"}, 
         {"firstname":"larry", "lastname": "byrd", "interactions": {"comments": [1, 2, 3, 4, 5], "posts": [1, 2, 3, 4, 0]}, "password": "temp", "session": "hassed_session"},
         {"firstname":"alistar", "lastname": "smith", "interactions": {"comments": [1, 0, 3, 4, 5], "posts": [0, 2, 3, 4, 5]}, "password": "temp", "session": "hassed_session"},
         {"firstname":"samantha", "lastname": "green", "interactions": {"comments": [1, 2, 0, 0, 5], "posts": [1, 2, 0, 4, 5]}, "password": "temp", "session": "hassed_session"},
         {"firstname":"emma", "lastname": "wingdale", "interactions": {"comments": [1, 2, 3, 4, 0], "posts": [1, 0, 3, 4, 5]}, "password": "temp", "session": "hassed_session"},
-        {"firstname":"joe", "lastname": "bruin", "interactions": {"comments": [0, 0, 0, 0, 0], "posts": [1, 2, 3, 0, 5]}, "password": "temp", "session": "hassed_session"}];
+        {"firstname":"joe", "lastname": "bruin", "interactions": {"comments": [0, 0, 0, 0, 0], "posts": [1, 2, 3, 0, 5]}, "password": "temp", "session": "hassed_session"},
+        {"firstname":"adam", "lastname": "peterson", "interactions": {"comments": [], "posts": []}, "password": "temp", "session": "hassed_session"}];
         //method to get users
         return(users);
     }
@@ -58,6 +59,7 @@ const Leaderboard = () => {
             else{
                 users[index]["commentrating"] = sum/count;
             }
+            console.log(sum/count);
         }
         
     }
@@ -66,8 +68,13 @@ const Leaderboard = () => {
     }
 
     const generateRatingBar = (rating) =>{
+        if(rating == "N/A"){
+            return(
+            <div class="ratingbarwrapper">
+            <div class="innerratingbar" style={"background-color: #575667"}></div>
+            </div>)
+        }
         let percentage = (rating/5)*100;
-        console.log(percentage)
         return(
         <div class="ratingbarwrapper">
         <div class="innerratingbar" style={"width:" + percentage +"%"+ ";"}></div>
@@ -90,7 +97,7 @@ const Leaderboard = () => {
                                 {generateRatingBar(users[index]["rating"])}
                                 <p>5</p>
                             </div>
-                            <p class="ratingvalue">Post Rating: {users[index]["rating"]}/5</p>
+                            <p class="ratingvalue">Post Rating: {users[index]["rating"] === "N/A"? "N/A" : users[index]["rating"] + "/5"}</p>
                         </div>
                     </div>
                 </li>
@@ -110,7 +117,7 @@ const Leaderboard = () => {
                                 {generateRatingBar(users[index]["commentrating"])}
                                 <p>5</p>
                             </div>
-                            <p class="ratingvalue">Comment Rating: {users[index]["commentrating"]}/5</p>
+                            <p class="ratingvalue">Comment Rating: {users[index]["commentrating"] === "N/A"? "N/A" :users[index]["commentrating"] + "/5"}</p>
                         </div>
                     </div>
                 </li>
@@ -137,16 +144,15 @@ const Leaderboard = () => {
             {renderList(postSortedUsers, true)}
         </ul>
     </div>
-
     const commentSortedUsers = usersRatingFormat.sort((a, b) => b["commentrating"] - a["commentrating"]);   
-
     const commentLeaderboard = 
     <div class='leaderboard'>
         <h1 class='leadertitle'>Comment Leaderboard</h1>
         <ul>
-            {renderList(commentSortedUsers, false)}
+            {renderList(commentSortedUsers, true)}
         </ul>
     </div>
+    
 
     return (
       <div class={'leaderwrapper'}>

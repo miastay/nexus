@@ -12,6 +12,7 @@ $color-4: #1b1a56;
 $color-5: #eeeeee;
 $color-6: hsl(241, 54%, 65%);
 $color-7: #15c71a;
+$color-8: #575667;
 
 $color-italic: lightgray;
 $color-good-1: rgb(45, 125, 45);
@@ -335,6 +336,7 @@ h1, h2, h3 {
     justify-content: center;
     width: 100%;
     flex-wrap: wrap;
+    column-gap: 50px;
 }
 
 .leaderboard{
