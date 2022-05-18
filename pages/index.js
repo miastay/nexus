@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './navbar';
 import Home from './home';
 import Poster from './poster';
+import Leaderboard from './leaderboard';
 
 function Index() {
   const [page, setPage] = useState('home');
@@ -18,6 +19,7 @@ return (
         <div class="page">
             {(page === 'home') && <Home layout={'abba'}/>}
             {(page === 'post') && <Poster />}
+            {(page === 'leaderboard') && <Leaderboard />}
         </div>
     </div>
 )

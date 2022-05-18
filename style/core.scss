@@ -142,6 +142,7 @@ h1, h2, h3 {
 .page {
     height: calc(100% - $nav-height - $padding-dbl - $padding-dbl);
     padding: $padding-dbl;
+    overflow-x: hidden;
 }
 .main {
     height: 100vh;
@@ -324,3 +325,59 @@ h1, h2, h3 {
         border: solid 1px $color-bad-1;
     }
 }
+
+////////////////////////
+.leaderwrapper{
+    height: 100%;
+}
+
+.leaderboard{
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.leaderboard ul{
+    list-style-type: None;
+    padding-left: 0%;
+    min-width: 50%;
+    max-width: 80%;
+    justify-content: center;
+    background-color: $color-1;
+    border-radius: 30px;
+    max-height: 90%;
+    overflow-y: scroll;
+}
+.leaderboard ul li{
+    color: white;
+}
+
+.leaderentry{
+    display: flex;
+    background-color: $color-2;
+    padding: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 30px;
+}
+
+.leaderentry img{
+    width: 20%;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.leadertitle{
+    width: 100%;
+    text-align: center;
+    height: fit-content;
+}
+
+
+
+/////////////////

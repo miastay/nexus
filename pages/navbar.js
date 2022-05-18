@@ -24,7 +24,7 @@ const Navbar = ({switcher, profile, currentPage}) => {
             <Navpage page="home" switcher={switcher} currentPage={currentPage}/>
             <Navpage page="post" switcher={switcher} currentPage={currentPage}/>
             <Navpage page="page" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="last one" switcher={switcher} currentPage={currentPage}/>
+            <Navpage page="leaderboard" switcher={switcher} currentPage={currentPage}/>
         </div>
         <div class="right">
             <ProfileSmall data={profile} switcher={switcher}/>
