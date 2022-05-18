@@ -125,24 +125,29 @@ const Leaderboard = () => {
         return(users)
     }
 
-    const usersRatingFormat = sortUsers(usersToRatings(getUsers()));
+    const usersRatingFormat = usersToRatings(getUsers());
     generateAverageRatings(usersRatingFormat);//adds the ratings to each user
+
+    const postSortedUsers = usersRatingFormat.sort((a, b) => b["rating"] - a["rating"]);
 
     const postLeaderboard = 
     <div class='leaderboard'>
         <h1 class='leadertitle'>Post Leaderboard</h1>
         <ul>
-            {renderList(usersRatingFormat, true)}
+            {renderList(postSortedUsers, true)}
         </ul>
     </div>
+
+    const commentSortedUsers = usersRatingFormat.sort((a, b) => b["commentrating"] - a["commentrating"]);   
 
     const commentLeaderboard = 
     <div class='leaderboard'>
         <h1 class='leadertitle'>Comment Leaderboard</h1>
         <ul>
-            {renderList(usersRatingFormat, false)}
+            {renderList(commentSortedUsers, false)}
         </ul>
     </div>
+
     return (
       <div class={'leaderwrapper'}>
           <div className='leaderpagetitle'> Leaderboards</div>
