@@ -28,7 +28,7 @@ return (
                 <div class="page">
                     {(page === 'home') && <Home setPage={changePage} layout={'abba'}/>}
                     {(page === 'post') && <Poster user={user} />}
-                    {(page.startsWith('posts')) && <Posts user={user} />}
+                    {(page.startsWith('posts')) && <Posts id={window.location.hash.substring(window.location.hash.indexOf("id=")+3)} user={user} setPage={changePage}/>}
                 </div>
             </>
         }
