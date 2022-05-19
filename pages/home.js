@@ -4,7 +4,7 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts } from './query.js';
+import { getPosts, getSessions, getUser, getUsers } from '../components/query.js';
 
 
 const Home = () => {
@@ -46,6 +46,18 @@ const Home = () => {
         setQuery(querystr);
     }
 
+    const grabUser = () => {
+        getUser({username: "example_user"}).then((data) => {
+            console.log(data);
+        });
+    }
+
+    const grabUsers = () => {
+        getUsers().then((data) => {
+            console.log(data);
+        });
+    }
+
     // useEffect(() => {
     //     window.addEventListener('load', generateModules());
     // })
@@ -54,7 +66,7 @@ const Home = () => {
       <div class={'grid top'}>
           <SearchModule query={updateSearch} setSort={reSort}/>
           <Container type={'modules'} modules={moduleList} query={query} refresh={() => generateModules()}/>
-          <button onClick={() => {reSort("score")}}/>
+          <button onClick={() => {grabUser(); grabUsers()}}/>
           <Container />
           <div>
               {moduleList == null ? generateModules() : null}

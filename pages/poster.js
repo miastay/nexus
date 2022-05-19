@@ -4,7 +4,7 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts, addPost } from './query.js';
+import { getPosts, addPost } from '../components/query.js';
 
 const PostForm = ({submit, update}) => {
 

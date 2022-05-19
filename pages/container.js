@@ -13,7 +13,7 @@ const Container = ({type, modules, query, refresh, comments}) => {
         } break;
         case 'modules' : {
             elem =  (   <div>
-                            <h2>Recent Posts</h2><input type="button" class="refresh" value="Refresh"></input><br/>
+                            <h2>Recent Posts</h2><br/>
                             <div class="container stretch in scroll">
                                 {modules && modules.map((x, i) => {
                                     return (x.props.title.indexOf(query) != -1 ||
