@@ -3,31 +3,27 @@ import { useEffect } from 'react';
 import Logo from './logo';
 import ProfileSmall from './profile';
 
-const Navpage = ({page, switcher, currentPage}) => {
-    
-    const switchPage = (page) => {
-        switcher(page);
-    }
+const Navpage = ({page, setPage, currentPage}) => {
     return (
-        <button class={`btn ${currentPage == page ? 'on' : ''}`} onClick={() => switchPage(page)}>{page}</button>
+        <button class={`btn ${currentPage == page ? 'on' : ''}`} onClick={() => { setPage(page) }}>{page}</button>
     )
 }
 
-const Navbar = ({switcher, profile, currentPage}) => {
+const Navbar = ({user, setPage, currentPage}) => {
 
     return (
       <div class="nav">
         <div class="left">
-            <Logo switcher={switcher}/>
+            <Logo />
         </div>
         <div class="mid">
-            <Navpage page="home" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="post" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="page" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="last one" switcher={switcher} currentPage={currentPage}/>
+            <Navpage page="home" setPage={setPage} currentPage={currentPage}/>
+            <Navpage page="post" setPage={setPage} currentPage={currentPage}/>
+            <Navpage page="page" setPage={setPage} currentPage={currentPage}/>
+            <Navpage page="last one" setPage={setPage} currentPage={currentPage}/>
         </div>
         <div class="right">
-            <ProfileSmall data={profile} switcher={switcher}/>
+            <ProfileSmall user={user} />
         </div>
       </div>
     )

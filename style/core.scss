@@ -11,6 +11,7 @@ $color-3: #2d2b91;
 $color-4: #1b1a56;
 $color-5: #eeeeee;
 $color-6: hsl(241, 54%, 65%);
+$color-7: #727272;
 
 $color-italic: lightgray;
 $color-good-1: rgb(45, 125, 45);
@@ -175,6 +176,7 @@ h1, h2, h3 {
     &.in {
         background: $color-5;
         box-shadow: inset 0px 0px 2px $shadow;
+        outline: solid 1px $shadow;
     }
     &.border {
         border: solid 1px $color-5;
@@ -334,4 +336,75 @@ h1, h2, h3 {
         background: $color-bad-2;
         border: solid 1px $color-bad-1;
     }
+}
+
+//////////////////
+
+.authpage {
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .logo {
+        width: 15%;
+        height: 15%;
+        align-self: center;
+        .image {
+            width: 100%;
+            height: 100%;
+            background: url('../public/logo_2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
+    .chip {
+        width: 25%;
+        min-height: 30%;
+        &.tall {
+            min-height: 35%;
+        }
+        align-self: center;
+        background: $color-5;
+        box-shadow: inset 0px 0px 2px $shadow;
+        align-items: center;
+        padding: $padding-dbl;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .header {
+            text-align: center;
+        }
+        label {
+            font-size: 1.3rem;
+        }
+        input {
+            padding: $padding;
+            font-size: larger;
+            width: 50%;
+            height: 8%;
+            margin-bottom: $padding;
+            border-radius: $border-r;
+            border: solid 1px black;
+        }
+        button {
+            padding: $padding-hlf;
+            margin-bottom: $padding;
+            font-size: larger;
+            width: 50%;
+            height: 15%;
+            background: $color-1;
+            color: $color-5;
+            border: none;
+            &.grayed {
+                background: $color-7;
+                color: $color-5;
+            }
+        }
+    }
+
 }

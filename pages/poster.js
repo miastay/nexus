@@ -24,7 +24,7 @@ const PostForm = ({submit, update}) => {
     )
 }
 
-const Poster = () => {
+const Poster = ({user}) => {
 
     const [posted, setPosted] = useState(-1);
     const [error, setError] = useState("");
@@ -43,7 +43,7 @@ const Poster = () => {
             setError("Body text is required.")
             return;
         }
-        addPost({title: title, author: 'me', body: body, result: function(data) {console.log(data); setPosted(data.id)}});
+        addPost({title: title, author: user.username, body: body, result: function(data) {console.log(data); setPosted(data.id)}});
     }
 
     const updateValues = ({title, body}) => {
