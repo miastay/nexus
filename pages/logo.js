@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const Logo = ({switcher}) => {
+const Logo = () => {
 
     //this is horrible react practice, but it looks very nice
     const animScroll = () => {
@@ -12,7 +12,7 @@ const Logo = ({switcher}) => {
     }
 
     const goHome = () => {
-        switcher('home');
+        window.location.hash = 'home';
     }
 
 

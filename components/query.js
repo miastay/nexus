@@ -4,6 +4,8 @@ import { collection, doc, setDoc, addDoc, getDoc, getDocs, Timestamp } from "fir
 import { getFirestore } from "firebase/firestore";
 import { DBCONF } from "./config";
 import { createHash } from 'crypto';
+//import cookieCutter from 'cookie-cutter';
+var cookieCutter = require('cookie-cutter');
 
 let app, db;
 
@@ -61,16 +63,23 @@ export async function getPosts() {
 //////////////////
 /*  User Logic  */
 
-let sessions = {};
-
 function generateSha256Hex(input) {
     const hash = createHash('sha256');
     hash.update(input);
     return hash.digest('hex');
 }
 
-export function getSessions() {
-    return sessions;
+export function isSignedIn() {
+    let session = cookieCutter.get('user-session');
+    if(!session) {
+        return false;
+    }
+    return JSON.parse(session);
+}
+
+export function signOut() {
+    cookieCutter.set('user-session', '', {expires: new Date(0)});
+    return !cookieCutter.get('user-session');
 }
 
 export async function addUser({username, firstname, lastname, password, result}) {
@@ -123,14 +132,14 @@ export async function getUsers() {
 }
 
 export async function isUsernameUnique({username}) {
-    console.log("get all users");
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-        if(doc.id === username) {
-            return false;
-        }
-    });
-    return true;
+    try {
+        const docRef = doc(db, 'users', username);
+        const docSnap = await getDoc(docRef);
+        return !docSnap.exists();
+    } catch(err) {
+        console.log(err);
+    }
+    return false;
 }
 
 
@@ -169,7 +178,7 @@ export async function trySignIn({username, password}) {
                 interactions: data.interactions,
                 session: generateSha256Hex(data.password)
             };
-            sessions[username] = user;
+            cookieCutter.set("user-session", JSON.stringify(user));
             return user;
 
         } else {
