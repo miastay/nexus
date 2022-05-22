@@ -4,84 +4,43 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts } from './query.js';
+import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut } from '../components/query.js';
 
 
 const Leaderboard = () => {
+    const [ret, setReturn] = useState(null);
 
-    const getUsers = () => {//temp
-        let users =
-        [{"firstname":"john", "lastname": "stevens", "interactions": {"comments": [1, 2, 3, 4, 5], "posts": [1, 2, 3, 4, 5]}, "password": "temp", "session": "hassed_session"}, 
-        {"firstname":"larry", "lastname": "byrd", "interactions": {"comments": [1, 2, 3, 4, 5], "posts": [1, 2, 3, 4, 0]}, "password": "temp", "session": "hassed_session"},
-        {"firstname":"alistar", "lastname": "smith", "interactions": {"comments": [1, 0, 3, 4, 5], "posts": [0, 2, 3, 4, 5]}, "password": "temp", "session": "hassed_session"},
-        {"firstname":"samantha", "lastname": "green", "interactions": {"comments": [1, 2, 0, 0, 5], "posts": [1, 2, 0, 4, 5]}, "password": "temp", "session": "hassed_session"},
-        {"firstname":"emma", "lastname": "wingdale", "interactions": {"comments": [1, 2, 3, 4, 0], "posts": [1, 0, 3, 4, 5]}, "password": "temp", "session": "hassed_session"},
-        {"firstname":"joe", "lastname": "bruin", "interactions": {"comments": [0, 0, 0, 0, 0], "posts": [1, 2, 3, 0, 5]}, "password": "temp", "session": "hassed_session"},
-        {"firstname":"adam", "lastname": "peterson", "interactions": {"comments": [], "posts": []}, "password": "temp", "session": "hassed_session"}];
-        //method to get users
-        return(users);
+    const getAllUsers = async () => {//temp
+        return(getUsers());
     }
-    const usersToRatings = (users) =>{//temp
-        for(let user in users){
-            let ratings = []
-        }
-        return(users)
-    }
-    const generateAverageRatings = (users) => {
+    const idsToRatings = (users) =>{
         for(let index in users){
-            const user = users[index];
-            let sum = 0;
-            let count = 0;
-            const posts = user["interactions"]["posts"]
-            for (let index in posts){
-                sum += posts[index];
-                count += 1;
+            console.log(users[index]);
+            for(let post in users[index]['interactions']['posts']){
+                users[index]['interactions']['posts'][post] = Math.floor(Math.random() * 10) + 1;
             }
-            if(count == 0){
-                users[index]["rating"] = "N/A";
+            for(let comment in users[index]['interactions']['comments']){
+                users[index]['interactions']['comments'][comment] = Math.floor(Math.random() * 10) + 1;
+            }
+        }
+    }
+    const addRatings = (users) =>{
+        for(let index in users){
+            if(users[index]['interactions']['posts'].length == 0){
+                users[index]['postrating'] = "N/A";
             }
             else{
-                users[index]["rating"] = sum/count;
+                users[index]['postrating'] = users[index]['interactions']['posts'].reduce((a, b) => a + b, 0);
             }
-        }
-        for(let index in users){
-            const user = users[index];
-            let sum = 0;
-            let count = 0;
-            const comments = user["interactions"]["comments"]
-            for (let index in comments){
-                sum += comments[index];
-                count += 1;
-            }
-            if(count == 0){
-                users[index]["commentrating"] = "N/A";
+            if(users[index]['interactions']['comments'].length == 0){
+                users[index]['commentrating'] = "N/A";
             }
             else{
-                users[index]["commentrating"] = sum/count;
+                users[index]['commentrating'] = users[index]['interactions']['comments'].reduce((a, b) => a + b, 0);
             }
-            console.log(sum/count);
+            
         }
-        
     }
-    const capitalize = (str) =>{
-        return(str[0].toUpperCase() + str.substring(1));
-    }
-
-    const generateRatingBar = (rating) =>{
-        if(rating == "N/A"){
-            return(
-            <div class="ratingbarwrapper">
-            <div class="innerratingbar" style={"background-color: #575667"}></div>
-            </div>)
-        }
-        let percentage = (rating/5)*100;
-        return(
-        <div class="ratingbarwrapper">
-        <div class="innerratingbar" style={"width:" + percentage +"%"+ ";"}></div>
-        </div>
-        )
-    }
-
     const renderList = (users, type) => {
         const listItems = []
         if(type){
@@ -91,13 +50,8 @@ const Leaderboard = () => {
                     <div class="leaderentry">
                         <img src="https://e7.pngegg.com/pngimages/439/554/png-clipart-ghost-emoji-emoticon-ghost-smiley-emoji-sticker-fictional-character-thumbnail.png" />
                         <div className='description'>
-                            <p class="name">{capitalize(users[index]["firstname"])} {capitalize(users[index]["lastname"])}</p>
-                            <div class="ratingbar">
-                                <p>0</p>
-                                {generateRatingBar(users[index]["rating"])}
-                                <p>5</p>
-                            </div>
-                            <p class="ratingvalue">Post Rating: {users[index]["rating"] === "N/A"? "N/A" : users[index]["rating"] + "/5"}</p>
+                            <p class="name">{users[index]["firstname"]} {users[index]["lastname"]}</p>
+                            <p class="ratingvalue">Average Rating: {users[index]["postrating"] === "N/A"? "N/A" : users[index]["postrating"]}</p>
                         </div>
                     </div>
                 </li>
@@ -111,13 +65,8 @@ const Leaderboard = () => {
                     <div class="leaderentry">
                         <img src="https://e7.pngegg.com/pngimages/439/554/png-clipart-ghost-emoji-emoticon-ghost-smiley-emoji-sticker-fictional-character-thumbnail.png" />
                         <div className='description'>
-                            <p class="name">{capitalize(users[index]["firstname"])} {capitalize(users[index]["lastname"])}</p>
-                            <div class="ratingbar">
-                                <p>0</p>
-                                {generateRatingBar(users[index]["commentrating"])}
-                                <p>5</p>
-                            </div>
-                            <p class="ratingvalue">Comment Rating: {users[index]["commentrating"] === "N/A"? "N/A" :users[index]["commentrating"] + "/5"}</p>
+                            <p class="name">{users[index]["firstname"]} {users[index]["lastname"]}</p>
+                            <p class="ratingvalue">Average Rating: {users[index]["commentrating"] === "N/A"? "N/A" :users[index]["commentrating"]}</p>
                         </div>
                     </div>
                 </li>
@@ -127,40 +76,53 @@ const Leaderboard = () => {
         
         return(listItems);
     }
+    const generateReturns = () => { 
+        console.log("here");
 
-    const sortUsers = (users) => {
-        return(users)
-    }
-
-    const usersRatingFormat = usersToRatings(getUsers());
-    generateAverageRatings(usersRatingFormat);//adds the ratings to each user
-
-    const postSortedUsers = usersRatingFormat.sort((a, b) => b["rating"] - a["rating"]);
-
-    const postLeaderboard = 
-    <div class='leaderboard'>
-        <h1 class='leadertitle'>Post Leaderboard</h1>
-        <ul>
-            {renderList(postSortedUsers, true)}
-        </ul>
-    </div>
-    const commentSortedUsers = usersRatingFormat.sort((a, b) => b["commentrating"] - a["commentrating"]);   
-    const commentLeaderboard = 
-    <div class='leaderboard'>
-        <h1 class='leadertitle'>Comment Leaderboard</h1>
-        <ul>
-            {renderList(commentSortedUsers, true)}
-        </ul>
-    </div>
+        if(ret != null){
+            return;
+        }
+        getAllUsers().then((res)=>{
+            const users = [];
+            for(let index in res){
+                users.push(res[index]['data']);
+            }
+            //users is a list of dictionaries of user data
+            idsToRatings(users);
+            addRatings(users);
+            //each user data now has a postrating and commentrating field
+            console.log(users);
     
-
-    return (
-      <div class={'leaderwrapper'}>
-          <div className='leaderpagetitle'> Leaderboards</div>
-          {postLeaderboard}
-          {commentLeaderboard}
-      </div>
-    )
+            const postSortedUsers = users.sort((a, b) => b["postrating"] - a["postrating"]);
+    
+            const postLeaderboard = 
+            <div class='leaderboard'>
+                <h1 class='leadertitle'>Post Leaderboard</h1>
+                <ul>
+                    {renderList(postSortedUsers, true)}
+                </ul>
+            </div>
+    
+            const commentSortedUsers = users.sort((a, b) => b["commentrating"] - a["commentrating"]);
+    
+            const commentLeaderboard = 
+            <div class='leaderboard'>
+                <h1 class='leadertitle'>Comment Leaderboard</h1>
+                <ul>
+                    {renderList(commentSortedUsers, false)}
+                </ul>
+            </div>
+            let retVal = 
+            <div class={'leaderwrapper'}>
+                <div className='leaderpagetitle'> Leaderboards</div>
+                {postLeaderboard}
+                {commentLeaderboard}
+            </div>
+            setReturn(retVal);
+        })
+    }
+    generateReturns();
+    return(ret);
  }
   
 export default Leaderboard;

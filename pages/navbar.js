@@ -12,21 +12,21 @@ const Navpage = ({page, setPage, currentPage}) => {
 const Navbar = ({user, setPage, currentPage}) => {
 
     return (
-      <div class="nav">
-        <div class="left">
-            <Logo />
+        <div class="nav">
+          <div class="left">
+              <Logo />
+          </div>
+          <div class="mid">
+              <Navpage page="home" setPage={setPage} currentPage={currentPage}/>
+              <Navpage page="post" setPage={setPage} currentPage={currentPage}/>
+              <Navpage page="page" setPage={setPage} currentPage={currentPage}/>
+              <Navpage page="leaderboard" setPage={setPage} currentPage={currentPage}/>
+          </div>
+          <div class="right">
+              <ProfileSmall user={user} />
+          </div>
         </div>
-        <div class="mid">
-            <Navpage page="home" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="post" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="page" switcher={switcher} currentPage={currentPage}/>
-            <Navpage page="leaderboard" switcher={switcher} currentPage={currentPage}/>
-        </div>
-        <div class="right">
-            <ProfileSmall user={user} />
-        </div>
-      </div>
-    )
+      )
  }
   
 export default Navbar;
