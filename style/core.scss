@@ -11,8 +11,12 @@ $color-3: #2d2b91;
 $color-4: #1b1a56;
 $color-5: #eeeeee;
 $color-6: hsl(241, 54%, 65%);
+<<<<<<< HEAD
 $color-7: #15c71a;
 $color-8: #575667;
+=======
+$color-7: #727272;
+>>>>>>> 7677cd5bb2acb08c1d880006c02226daab56bf49
 
 $color-italic: lightgray;
 $color-good-1: rgb(45, 125, 45);
@@ -178,6 +182,7 @@ h1, h2, h3 {
     &.in {
         background: $color-5;
         box-shadow: inset 0px 0px 2px $shadow;
+        outline: solid 1px $shadow;
     }
     &.border {
         border: solid 1px $color-5;
@@ -196,6 +201,7 @@ h1, h2, h3 {
     .title {
         width: 100%;
         height: 25%;
+        font-size: 150%;
         cursor: pointer;
     }
     .body {
@@ -207,14 +213,17 @@ h1, h2, h3 {
         width: 100%;
         flex-direction: row;
         margin-block-start: 0;
-        margin-block-end: 0;
+        margin-block-end: -1 * $padding;
         .fingerprint {
             text-align: right;
             font-style: italic;
+            color: $color-6;
             width: 75%;
         }
         .score {
             color: $color-1;
+            font-weight: bolder;
+            font-size: 110%;
             text-align: left;
             width: 25%;
         }
@@ -228,9 +237,8 @@ h1, h2, h3 {
 //////////////////
 
 .search {
-    height: 50px;
     .bar {
-        height: 100%;
+        height: 50px;
         display: flex;
         flex-direction: row;
         justify-content: left;
@@ -242,6 +250,14 @@ h1, h2, h3 {
             border-radius: $border-r;
             padding: 0 $border-r;
             border: solid 1px black;
+        }
+    }
+    .sort {
+        margin-top: $padding;
+        height: 200%;
+        select {
+            padding: $padding-hlf;
+            margin-left: $padding-hlf;
         }
     }
 }
@@ -454,3 +470,73 @@ h1, h2, h3 {
 
 
 /////////////////
+//////////////////
+
+.authpage {
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .logo {
+        width: 15%;
+        height: 15%;
+        align-self: center;
+        .image {
+            width: 100%;
+            height: 100%;
+            background: url('../public/logo_2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
+    .chip {
+        width: 25%;
+        min-height: 30%;
+        &.tall {
+            min-height: 35%;
+        }
+        align-self: center;
+        background: $color-5;
+        box-shadow: inset 0px 0px 2px $shadow;
+        align-items: center;
+        padding: $padding-dbl;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .header {
+            text-align: center;
+        }
+        label {
+            font-size: 1.3rem;
+        }
+        input {
+            padding: $padding;
+            font-size: larger;
+            width: 50%;
+            height: 8%;
+            margin-bottom: $padding;
+            border-radius: $border-r;
+            border: solid 1px black;
+        }
+        button {
+            padding: $padding-hlf;
+            margin-bottom: $padding;
+            font-size: larger;
+            width: 50%;
+            height: 15%;
+            background: $color-1;
+            color: $color-5;
+            border: none;
+            &.grayed {
+                background: $color-7;
+                color: $color-5;
+            }
+        }
+    }
+
+}

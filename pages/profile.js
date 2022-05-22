@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const ProfileSmall = ({data, switcher}) => {
-
-    const switchPage = (page) => {
-        switcher(page);
-    }
+const ProfileSmall = ({user}) => {
 
     return (
       <div class="profile small">
-          <button onClick={() => switchPage('profile')}>
-            <img src={data.img}/>
-            <div class="username">{data.user}</div>
+          <button onClick={() => window.location.hash = 'profile'}>
+            <img src={'ghost.png'}/>
+            <div class="username">{user.username}</div>
           </button>
       </div>
     )

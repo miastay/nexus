@@ -4,7 +4,7 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts, addPost } from './query.js';
+import { getPosts, addPost } from '../components/query.js';
 
 const PostForm = ({submit, update}) => {
 
@@ -24,7 +24,7 @@ const PostForm = ({submit, update}) => {
     )
 }
 
-const Poster = () => {
+const Poster = ({user}) => {
 
     const [posted, setPosted] = useState(-1);
     const [error, setError] = useState("");
@@ -43,7 +43,7 @@ const Poster = () => {
             setError("Body text is required.")
             return;
         }
-        addPost({title: title, author: 'me', body: body, result: function(data) {console.log(data); setPosted(data.id)}});
+        addPost({title: title, author: user.username, body: body, result: function(data) {console.log(data); setPosted(data.id)}});
     }
 
     const updateValues = ({title, body}) => {

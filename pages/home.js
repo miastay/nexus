@@ -4,10 +4,10 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts } from './query.js';
+import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut } from '../components/query.js';
 
 
-const Home = () => {
+const Home = ({setPage}) => {
 
     //const [liveModules, setLiveModules] = useState(moduleList);
     const [query, setQuery] = useState("");
@@ -17,7 +17,7 @@ const Home = () => {
         let modules = [];
         getPosts().then((posts) => {
             posts.forEach(x => {
-                modules.push(<Module title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} scores={x.data.score} id={x.id} query={query} searchable/>)
+                modules.push(<Module setPage={setPage} title={x.data.title} body={x.data.body} author={x.data.author} date={x.data.date} scores={x.data.score} id={x.id} query={query} searchable/>)
             })
             modules.sort((a, b) => sorter(a, b, "date"))
             setModuleList(modules);
@@ -46,6 +46,12 @@ const Home = () => {
         setQuery(querystr);
     }
 
+    const testlogin = () => {
+        trySignIn({username: "example_user", password: "password"}).then((data) => {
+            console.log(data);
+        })
+    }
+
     // useEffect(() => {
     //     window.addEventListener('load', generateModules());
     // })
@@ -54,7 +60,11 @@ const Home = () => {
       <div class={'grid top'}>
           <SearchModule query={updateSearch} setSort={reSort}/>
           <Container type={'modules'} modules={moduleList} query={query} refresh={() => generateModules()}/>
-          <button onClick={() => {reSort("score")}}/>
+          <div>
+            <button onClick={() => {testlogin()}}>Sign in as example_user</button>
+            <button onClick={() => {console.log(isSignedIn())}}>Check if signed in</button>
+            <button onClick={() => {console.log(signOut())}}>Sign out</button>
+          </div>
           <Container />
           <div>
               {moduleList == null ? generateModules() : null}

@@ -3,12 +3,20 @@ import Navbar from './navbar';
 import Home from './home';
 import Poster from './poster';
 import Leaderboard from './leaderboard';
+import Posts from './posts';
+import { useEffect } from 'react';
+import { isSignedIn } from '../components/query.js';
+import Authenticator from '../components/authenticator';
 
 function Index() {
   const [page, setPage] = useState('home');
-  const [profile, setProfile] = useState({'user':'person', 'img': 'https://e7.pngegg.com/pngimages/439/554/png-clipart-ghost-emoji-emoticon-ghost-smiley-emoji-sticker-fictional-character-thumbnail.png'});
+  const [user, setUser] = useState(null);
 
-  const switchPage = (page) => {
+  useEffect(() => {
+      if(!user) { setUser(isSignedIn()) };
+  });
+
+  const changePage = (page) => {
       setPage(page);
       window.location.hash = page;
   }
