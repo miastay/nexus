@@ -19,11 +19,12 @@ const Navbar = ({user, setPage, currentPage}) => {
         <div class="mid">
             <Navpage page="home" setPage={setPage} currentPage={currentPage}/>
             <Navpage page="post" setPage={setPage} currentPage={currentPage}/>
-            <Navpage page="page" setPage={setPage} currentPage={currentPage}/>
+            <Navpage page="posts" setPage={setPage} currentPage={currentPage}/>
             <Navpage page="last one" setPage={setPage} currentPage={currentPage}/>
+		
         </div>
         <div class="right">
-            <ProfileSmall user={user} />
+            <ProfileSmall user={user}/>
         </div>
       </div>
     )

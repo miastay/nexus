@@ -3,6 +3,8 @@ import Navbar from './navbar';
 import Home from './home';
 import Poster from './poster';
 import Posts from './posts';
+import Leaderboard from './leaderboard';
+import Practice from './practice';
 import { useEffect } from 'react';
 import { isSignedIn } from '../components/query.js';
 import Authenticator from '../components/authenticator';
@@ -29,7 +31,8 @@ return (
                     {(page === 'home') && <Home setPage={changePage} layout={'abba'}/>}
                     {(page === 'post') && <Poster user={user} />}
                     {(page.startsWith('posts')) && <Posts id={window.location.hash.substring(window.location.hash.indexOf("id=")+3)} user={user} setPage={changePage}/>}
-                </div>
+                    {(page === 'last one') && <Practice user={user}/>}
+               </div>
             </>
         }
         {!user && 

@@ -7,7 +7,7 @@ const ProfileSmall = ({user}) => {
       <div class="profile small">
           <button onClick={() => window.location.hash = 'profile'}>
             <img src={'ghost.png'}/>
-            <div class="username">{user.username}</div>
+            <div class="username">Profile</div>
           </button>
       </div>
     )
