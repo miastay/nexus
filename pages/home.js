@@ -65,10 +65,7 @@ const Home = ({setPage}) => {
             <button onClick={() => {console.log(isSignedIn())}}>Check if signed in</button>
             <button onClick={() => {console.log(signOut())}}>Sign out</button>
           </div>
-          <Container />
-          <div>
-              {moduleList == null ? generateModules() : null}
-          </div>
+        {moduleList == null ? generateModules() : null}
       </div>
     )
  }

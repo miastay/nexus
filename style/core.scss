@@ -107,7 +107,7 @@ h1, h2, h3 {
         }
     }
     .right {
-        width: 13%;
+        width: 16%;
         height: 100%;
         align-self: flex-end;
         * {
@@ -188,6 +188,10 @@ h1, h2, h3 {
         overflow-y: scroll;
         height: 80vh;
     }
+}
+.module_wrapper {
+    height: 100%;
+    overflow-y: hidden;
 }
 
 .module {
@@ -290,6 +294,7 @@ h1, h2, h3 {
                 font-size: 150%;
                 height: 100%;
                 width: 100%;
+                padding-left: $padding-hlf;
             }
         }
     }
@@ -309,8 +314,12 @@ h1, h2, h3 {
     }
     .body {
         width: 100%;
-        height: 40%;
-        margin-bottom: calc(3 * $padding);
+        margin-bottom: calc(2 * $padding);
+        textarea {
+            padding: $padding-hlf;
+            font-size: larger;
+            max-width: 100%;
+        }
     }
     .submit {
         width: 20%;
@@ -318,7 +327,7 @@ h1, h2, h3 {
         font-size: medium;
     }
     input {
-        padding: $padding;
+        padding: $padding-hlf;
         font-size: larger;
         width: 100%;
         height: 100%;

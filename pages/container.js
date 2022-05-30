@@ -3,6 +3,22 @@ import { useEffect } from 'react';
 
 const Container = ({type, modules, query, refresh, comments}) => {
 
+    const testQuery = (querystr, props) => {
+        let score = 0;
+        let score_threshold = 2;
+        let query_arr = querystr.split(' ');
+        for(var q of query_arr) {
+            if(props.title.indexOf(q) != -1) 
+                { score += 2; break; } 
+            else if(props.body.indexOf(q) != -1)
+                { score += 2; break; } 
+            else if(props.author.indexOf(q) != -1) 
+                { score += 2; break; } 
+            else { score--; }
+        }
+        return score >= (query_arr.length / 2);
+    }
+
     let elem;
     switch(type) {
         case 'back-sidebar' : {
@@ -12,12 +28,11 @@ const Container = ({type, modules, query, refresh, comments}) => {
                     )
         } break;
         case 'modules' : {
-            elem =  (   <div>
+            elem =  (   <div class="module_wrapper">
                             <h2>Recent Posts</h2><br/>
                             <div class="container stretch in scroll">
                                 {modules && modules.map((x, i) => {
-                                    return (x.props.title.indexOf(query) != -1 ||
-                                            x.props.body.indexOf(query) != -1
+                                    return (testQuery(query, x.props)
                                     ? x : null);
                                 })}
                             </div>
