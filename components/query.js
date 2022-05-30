@@ -97,10 +97,8 @@ export async function addUser({username, firstname, lastname, password, result})
         firstname: firstname,
         lastname: lastname,
         password: passhash,
-        interactions: {
-            'posts': [],
-            'comments': []
-        }
+        posts: {},
+        comments: {}
     }
     ).then((data) => {result(data)}); 
     
@@ -180,6 +178,52 @@ export async function trySignIn({username, password}) {
             };
             cookieCutter.set("user-session", JSON.stringify(user));
             return user;
+
+        } else {
+            return "username";
+        }
+    } catch(err) {
+        console.log(err);
+    }
+}
+//
+/**
+ * tryCreate
+ * 
+ * attempts to create a user, given a username string
+ * and a password string
+ * 
+ * @param {username: string, password: string} param0 
+ * @returns "username" or "password" if one was incorrect; else, the user object
+ */
+
+ export async function tryCreate({username, firstname, lastname, password}) {
+    console.log("get one user");
+    try {
+        const docRef = doc(db, 'users', username);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+            
+            // username does not exist yet, now try adding the user:
+
+            console.log('adding user')
+
+            // create password hash to store securely:
+
+            const passhash = generateSha256Hex(password);
+
+            // now that our hash is ready, POST the user
+            // and return the object:
+            
+            const docRef = await setDoc(doc(db, "users", username), 
+            {
+                firstname: firstname,
+                lastname: lastname,
+                password: passhash,
+                posts: {},
+                comments: {}
+            }
+            ).then((data) => { return data });
 
         } else {
             return "username";
