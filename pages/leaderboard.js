@@ -4,7 +4,7 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut } from '../components/query.js';
+import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut, getPost } from '../components/query.js';
 
 
 const Leaderboard = () => {
@@ -12,30 +12,31 @@ const Leaderboard = () => {
     const getAllUsers = async () => {//temp
         return(getUsers());
     }
-    const idsToRatings = (users) =>{
+    const idsToRatings = async (users) =>{
         for(let index in users){
-            console.log(users[index]);
-            for(let post in users[index]['interactions']['posts']){
-                users[index]['interactions']['posts'][post] = Math.floor(Math.random() * 10) + 1;
+            for(let post in users[index]['posts']){
+                users[index]['posts'][post] = Math.floor(Math.random() * 10) + 1;
+                //let post = await getPost(users[index]['posts'][0]);
+                //console.log(post);
             }
-            for(let comment in users[index]['interactions']['comments']){
-                users[index]['interactions']['comments'][comment] = Math.floor(Math.random() * 10) + 1;
+            for(let comment in users[index]['comments']){
+                users[index]['comments'][comment] = Math.floor(Math.random() * 10) + 1;
             }
         }
     }
     const addRatings = (users) =>{
         for(let index in users){
-            if(users[index]['interactions']['posts'].length == 0){
+            if(users[index]['posts'].length == 0){
                 users[index]['postrating'] = "N/A";
             }
             else{
-                users[index]['postrating'] = users[index]['interactions']['posts'].reduce((a, b) => a + b, 0);
+                users[index]['postrating'] = users[index]['posts'].reduce((a, b) => a + b, 0);
             }
-            if(users[index]['interactions']['comments'].length == 0){
+            if(users[index]['comments'].length == 0){
                 users[index]['commentrating'] = "N/A";
             }
             else{
-                users[index]['commentrating'] = users[index]['interactions']['comments'].reduce((a, b) => a + b, 0);
+                users[index]['commentrating'] = users[index]['comments'].reduce((a, b) => a + b, 0);
             }
             
         }
@@ -76,7 +77,6 @@ const Leaderboard = () => {
         return(listItems);
     }
     const generateReturns = () => { 
-        console.log("here");
 
         if(ret != null){
             return;
@@ -90,7 +90,6 @@ const Leaderboard = () => {
             idsToRatings(users);
             addRatings(users);
             //each user data now has a postrating and commentrating field
-            console.log(users);
     
             const postSortedUsers = users.sort((a, b) => b["postrating"] - a["postrating"]);
     
