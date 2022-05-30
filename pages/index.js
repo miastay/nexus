@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './navbar';
 import Home from './home';
 import Poster from './poster';
+import Leaderboard from './leaderboard';
 import Posts from './posts';
 import { useEffect } from 'react';
 import { isSignedIn } from '../components/query.js';
@@ -29,6 +30,7 @@ return (
                     {(page === 'home') && <Home setPage={changePage} layout={'abba'}/>}
                     {(page === 'post') && <Poster user={user} />}
                     {(page.startsWith('posts')) && <Posts id={window.location.hash.substring(window.location.hash.indexOf("id=")+3)} user={user} setPage={changePage}/>}
+                    {(page === 'leaderboard') && <Leaderboard />}
                 </div>
             </>
         }
