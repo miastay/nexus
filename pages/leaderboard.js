@@ -9,7 +9,6 @@ import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut } from '../
 
 const Leaderboard = () => {
     const [ret, setReturn] = useState(null);
-
     const getAllUsers = async () => {//temp
         return(getUsers());
     }
