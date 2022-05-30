@@ -24,7 +24,7 @@ const PostForm = ({submit, update}) => {
     )
 }
 
-const Poster = ({user}) => {
+const Poster = ({user, setPage}) => {
 
     const [posted, setPosted] = useState(-1);
     const [error, setError] = useState("");
@@ -59,7 +59,7 @@ const Poster = ({user}) => {
         <div class={'grid poster'}>
             <div class={'container border'}>
                 <h2>Create a Post</h2><br/><br/>
-                {posted != -1 && <div class="message confirmation">Post submitted successfully. <a href={`/#posts?id=${posted}`}>{"Go to the post >>"}</a></div>}
+                {posted != -1 && <div class="message confirmation">Post submitted successfully. <a href="" onClick={() => setPage(`posts?id=${posted}`)}>{"Go to the post >>"}</a></div>}
                 {error && <div class="message error">{error}</div>}
                 {postForm}
             </div>

@@ -48,33 +48,26 @@ const LogInModule = () => {
         <div class="page">
             <div class="authpage">
                 <div class="logo"><div class="image"/></div>
-                {!isCreate && 
-                    <div name="signin" class="chip">
-                        <h2 class="header">Sign In</h2>
-                        <br/>
-                        {confirmation && <div class="message confirmation">{confirmation}</div>}
-                        {error && <div class="message error">{error}</div>}
-                        <input name="username" type="text" placeholder="username" onChange={(evt) => setUsername(evt.target.value)}/>
-                        <input name="password" type="password" placeholder="password" onChange={(evt) => setPassword(evt.target.value)}/>
-
-                        <button onClick={() => submitSignin()}>sign in</button>
-                        <button class="grayed" onClick={() => { setIsCreate(true); setError("")}}>create account</button>
-                    </div>
-                }
-                {isCreate &&
-                    <div name="signup" class="chip tall">
-                        <h2 class="header">Create Account</h2>
+                    <div name={isCreate ? "signup" : "signin"} class={isCreate ? "chip tall" : "chip"}>
+                        <h2 class="header">{isCreate ? "Create Account" : "Sign In"}</h2>
                         <br/>
                         {error && <div class="message error">{error}</div>}
                         <input name="username" type="text" placeholder="username" onChange={(evt) => setUsername(evt.target.value)}/>
                         <input name="password" type="password" placeholder="password" onChange={(evt) => setPassword(evt.target.value)}/>
-                        <input name="password" type="password" placeholder="confirm password" onChange={(evt) => setPasswordConf(evt.target.value)}/>
-                        <input name="firstname" type="text" placeholder="first name" onChange={(evt) => setFirstname(evt.target.value)}/>
-                        <input name="lastname" type="text" placeholder="last name" onChange={(evt) => setLastname(evt.target.value)}/>
-                        <button onClick={() => submitCreate()}>create</button>
-                        <button class="grayed" onClick={() => { setIsCreate(false); setError("")}}>switch to sign in</button>
+                        { isCreate && 
+                        <>
+                            <input name="password" type="password" placeholder="confirm password" onChange={(evt) => setPasswordConf(evt.target.value)}/>
+                            <input name="firstname" type="text" placeholder="first name" onChange={(evt) => setFirstname(evt.target.value)}/>
+                            <input name="lastname" type="text" placeholder="last name" onChange={(evt) => setLastname(evt.target.value)}/>
+                            <button onClick={() => submitCreate()}>create</button>
+                            <button class="grayed" onClick={() => { setIsCreate(false); setError("")}}>switch to sign in</button>
+                        </> }
+                        { !isCreate && 
+                        <>
+                            <button onClick={() => submitSignin()}>sign in</button>
+                            <button class="grayed" onClick={() => { setIsCreate(true); setError("")}}>create account</button>
+                        </> }
                     </div>
-                }
             </div>
         </div>
     )
