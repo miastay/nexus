@@ -4,41 +4,33 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut, getPost } from '../components/query.js';
+import { getPost, getUser, getUsers, isSignedIn, trySignIn, signOut } from '../components/query.js';
 
 
 const Leaderboard = () => {
     const [ret, setReturn] = useState(null);
+
     const getAllUsers = async () => {//temp
         return(getUsers());
     }
-    const idsToRatings = async (users) =>{
+    const idsToRatings = (users) =>{
         for(let index in users){
-            for(let post in users[index]['posts']){
-                users[index]['posts'][post] = Math.floor(Math.random() * 10) + 1;
-                //let post = await getPost(users[index]['posts'][0]);
-                //console.log(post);
+            console.log(users[index]);
+            let userposts = users[index].posts;
+            let usercomments = users[index].comments;
+            for(let post in userposts)
+            {
+                users[index].post_score = 0;
+                getPost({id: post}).then((data) => {
+                    console.log(data)
+                    users[index].post_score += data.score.up.length - data.score.down.length;
+                })
             }
-            for(let comment in users[index]['comments']){
-                users[index]['comments'][comment] = Math.floor(Math.random() * 10) + 1;
+            for(let comment in usercomments){
+                //add comment score logic here
+                usercomments[comment] = Math.floor(Math.random() * 10) + 1;
             }
-        }
-    }
-    const addRatings = (users) =>{
-        for(let index in users){
-            if(users[index]['posts'].length == 0){
-                users[index]['postrating'] = "N/A";
-            }
-            else{
-                users[index]['postrating'] = users[index]['posts'].reduce((a, b) => a + b, 0);
-            }
-            if(users[index]['comments'].length == 0){
-                users[index]['commentrating'] = "N/A";
-            }
-            else{
-                users[index]['commentrating'] = users[index]['comments'].reduce((a, b) => a + b, 0);
-            }
-            
+            console.log(users[index]);
         }
     }
     const renderList = (users, type) => {
@@ -51,7 +43,7 @@ const Leaderboard = () => {
                         <img src="https://e7.pngegg.com/pngimages/439/554/png-clipart-ghost-emoji-emoticon-ghost-smiley-emoji-sticker-fictional-character-thumbnail.png" />
                         <div className='description'>
                             <p class="name">{users[index]["firstname"]} {users[index]["lastname"]}</p>
-                            <p class="ratingvalue">Average Rating: {users[index]["postrating"] === "N/A"? "N/A" : users[index]["postrating"]}</p>
+                            <p class="ratingvalue">Average Rating: {users[index]["post_score"]}</p>
                         </div>
                     </div>
                 </li>
@@ -77,6 +69,7 @@ const Leaderboard = () => {
         return(listItems);
     }
     const generateReturns = () => { 
+        console.log("here");
 
         if(ret != null){
             return;
@@ -88,10 +81,10 @@ const Leaderboard = () => {
             }
             //users is a list of dictionaries of user data
             idsToRatings(users);
-            addRatings(users);
             //each user data now has a postrating and commentrating field
     
-            const postSortedUsers = users.sort((a, b) => b["postrating"] - a["postrating"]);
+            const postSortedUsers = users.sort((a, b) => b.post_score - a.post_score);
+            console.log(postSortedUsers);
     
             const postLeaderboard = 
             <div class='leaderboard'>
@@ -112,7 +105,7 @@ const Leaderboard = () => {
             </div>
             let retVal = 
             <div class={'leaderwrapper'}>
-                <div className='leaderpagetitle'> Leaderboards</div>
+                <div className='leaderpagetitle'>Leaderboards</div>
                 {postLeaderboard}
                 {commentLeaderboard}
             </div>
