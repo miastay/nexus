@@ -56,15 +56,13 @@ const Poster = ({user}) => {
     const postForm = (<PostForm submit={submitPost} update={updateValues}/>);
 
     return (
-        <div class={'grid post'}>
-            <Container type={'back-sidebar'} />
+        <div class={'grid poster'}>
             <div class={'container border'}>
                 <h2>Create a Post</h2><br/><br/>
                 {posted != -1 && <div class="message confirmation">Post submitted successfully. <a href={`/#posts?id=${posted}`}>{"Go to the post >>"}</a></div>}
                 {error && <div class="message error">{error}</div>}
                 {postForm}
             </div>
-            <Container/>
         </div>
     )
  }

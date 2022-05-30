@@ -35,7 +35,6 @@ function Posts({id, user, setPage}) {
 
     return (
         <div class={'grid post'}>
-            <Container type={'back-sidebar'} />
                 <div class={'container border'}>
                     {post == null ? generatePostFromID(postID) : null}
                     {post}
