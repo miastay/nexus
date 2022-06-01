@@ -109,11 +109,13 @@ h1, h2, h3 {
     .right {
         width: 16%;
         height: 100%;
-        align-self: flex-end;
-        * {
-            width: 100%;
-            height: 100%;
-        }
+        display: grid;
+        .btn {
+	    width: 90%;
+            @include button;
+            font-size: 160%;
+	}
+	
     }
     .mid {
         width: 80%;
@@ -366,6 +368,131 @@ h1, h2, h3 {
         border: solid 1px $color-bad-1;
     }
 }
+
+.postwrapper{
+    display: flex;
+    height: 34%;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    column-gap: 50px;
+}
+
+.postboard{
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    height: 200%;
+    width: 40%;
+}
+
+.postboard ul{
+    list-style-type: None;
+    padding-left: 0%;
+    min-width: 30%;
+    justify-content: center;
+    background-color: $color-1;
+    border-radius: 30px;
+    max-height: 85%;
+    overflow-y: scroll;
+}
+.postboard ul li{
+    color: white;
+}
+
+.postentry{
+    display: flex;
+    background-color: $color-2;
+    padding: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 30px;
+}
+
+.postentry img{
+    width: 30%;
+    height: 40%;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin: 2px;
+}
+
+.postentry .description .name{
+    width: 100%;
+    color: black;
+    font-weight: 900;
+    font-size: 2em;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.postentry .description{
+    margin-left: 2%;
+    height: fit-content;
+    padding: 0;
+    width: 65%;
+}
+
+.posttitle{
+    width: 100%;
+    text-align: center;
+    height: fit-content;
+}
+
+.innerratingbar{
+    height: 100%;
+    background-color: $color-7;
+    z-index: 5;
+    border-radius: 5px;
+}
+
+.ratingbar{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 20%;
+    justify-content: center;
+    column-gap: 10px;
+    padding-top: 5%;
+}
+
+.ratingbarwrapper{
+    width: 100%;
+    background-color: #1b1a56;
+    border-radius: 5px;
+}
+
+.ratingbar p{
+    margin: 0;
+    padding: 0;
+    font-weight: 900;
+    font-size: 1.5em;
+    color: black;
+}
+
+.ratingvalue{
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-weight: 900;
+    font-size: 1em;
+}
+
+.postpagetitle{
+    font-size: 2.5em;
+    width: 100%;
+    text-align: center;
+    font-weight: 900;
+    padding: 10px;
+}
+
+
+/////////////////
 
 ////////////////////////
 
