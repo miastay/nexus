@@ -40,11 +40,15 @@ export async function addPost({title, author, body, result}) {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(docSnap.data())
-            let old_posts = docSnap.data().posts
+            let old_data = docSnap.data()
+            let old_posts = old_data.posts
             old_posts[data.id] = 'author';
             console.log(old_posts)
             docRef = await setDoc(doc(db, "users", author), 
             {
+                firstname: old_data.firstname,
+                lastname: old_data.lastname,
+                password: old_data.password,
                 posts: old_posts
             }
             ).then(() => { result(post_data) });
