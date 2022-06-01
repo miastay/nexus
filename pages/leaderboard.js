@@ -37,7 +37,6 @@ const Leaderboard = () => {
         const listItems = []
         if(type){
             for(let index in users){
-                console.log(users[index]['postrating']);
                 listItems.push(
                 <li>
                     <div class="leaderentry">
@@ -80,8 +79,12 @@ const Leaderboard = () => {
                 users.push(res[index]['data']);
             }
             //users is a list of dictionaries of user data
-            idsToRatings(users);
+            idsToRatings(users).then(() =>{
+                console.log(users[0]['postrating']);
+            
             //each user data now has a postrating and commentrating field
+
+            
     
             const postSortedUsers = users.sort((a, b) => b["postrating"] - a["postrating"]);
     
@@ -109,6 +112,7 @@ const Leaderboard = () => {
                 {commentLeaderboard}
             </div>
             setReturn(retVal);
+            });
         })
     }
     generateReturns();
