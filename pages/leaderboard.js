@@ -4,33 +4,31 @@ import SearchModule from './search';
 import Container from './container';
 import Module from './module';
 import { useRouter } from 'next/router';
-import { getPost, getUser, getUsers, isSignedIn, trySignIn, signOut } from '../components/query.js';
+import { getPosts, getUser, getUsers, isSignedIn, trySignIn, signOut, getPost } from '../components/query.js';
 
 
 const Leaderboard = () => {
     const [ret, setReturn] = useState(null);
-
     const getAllUsers = async () => {//temp
         return(getUsers());
     }
-    const idsToRatings = (users) =>{
+    const idsToRatings = async (users) =>{
         for(let index in users){
-            console.log(users[index]);
-            let userposts = users[index].posts;
-            let usercomments = users[index].comments;
-            for(let post in userposts)
-            {
-                users[index].post_score = 0;
-                getPost({id: post}).then((data) => {
-                    console.log(data)
-                    users[index].post_score += data.score.up.length - data.score.down.length;
-                })
+            let postrating = 0;
+            let numPosts = 0;
+            for(let post in users[index]['posts']){
+                let p = await getPost({id:post});
+                let score = p['score']['up'].length - p['score']['down'].length;
+                numPosts += 1;
+                postrating += score;
             }
-            for(let comment in usercomments){
-                //add comment score logic here
-                usercomments[comment] = Math.floor(Math.random() * 10) + 1;
+            if(numPosts === 0){
+                users[index]['postrating'] = "N/A";
             }
-            console.log(users[index]);
+            else{
+                users[index]['postrating'] = postrating;
+            }
+            users[index]['commentrating'] = Math.floor(Math.random() * 10) + 1;
         }
     }
     const renderList = (users, type) => {
@@ -43,7 +41,7 @@ const Leaderboard = () => {
                         <img src="https://e7.pngegg.com/pngimages/439/554/png-clipart-ghost-emoji-emoticon-ghost-smiley-emoji-sticker-fictional-character-thumbnail.png" />
                         <div className='description'>
                             <p class="name">{users[index]["firstname"]} {users[index]["lastname"]}</p>
-                            <p class="ratingvalue">Average Rating: {users[index]["post_score"]}</p>
+                            <p class="ratingvalue">Average Rating: {users[index]["postrating"] === "N/A"? "N/A" : users[index]["postrating"]}</p>
                         </div>
                     </div>
                 </li>
@@ -69,7 +67,6 @@ const Leaderboard = () => {
         return(listItems);
     }
     const generateReturns = () => { 
-        console.log("here");
 
         if(ret != null){
             return;
@@ -80,11 +77,14 @@ const Leaderboard = () => {
                 users.push(res[index]['data']);
             }
             //users is a list of dictionaries of user data
-            idsToRatings(users);
+            idsToRatings(users).then(() =>{
+                console.log(users);
+            
             //each user data now has a postrating and commentrating field
+
+            
     
-            const postSortedUsers = users.sort((a, b) => b.post_score - a.post_score);
-            console.log(postSortedUsers);
+            const postSortedUsers = users.sort((a, b) => b["postrating"] - a["postrating"]);
     
             const postLeaderboard = 
             <div class='leaderboard'>
@@ -105,11 +105,12 @@ const Leaderboard = () => {
             </div>
             let retVal = 
             <div class={'leaderwrapper'}>
-                <div className='leaderpagetitle'>Leaderboards</div>
+                <div className='leaderpagetitle'> Leaderboards</div>
                 {postLeaderboard}
                 {commentLeaderboard}
             </div>
             setReturn(retVal);
+            });
         })
     }
     generateReturns();
