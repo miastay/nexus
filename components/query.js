@@ -24,6 +24,7 @@ try {
 
 export async function addPost({title, author, body, result}) {
     console.log('adding post')
+    let post_data = null
     const docRef = await addDoc(collection(db, "posts"), 
         {
             title: title,
@@ -32,12 +33,22 @@ export async function addPost({title, author, body, result}) {
             date: Timestamp.fromDate(new Date()),
             score: {'up': [], 'down': []}
         }
-    ).then((data) => {
-        docRef = await setDoc(doc(db, "users", author), 
+    ).then(
+        async function(data){
+        post_data = data;
+        const docRef = doc(db, 'users', author);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            console.log(docSnap.data())
+            let old_posts = docSnap.data().posts
+            old_posts[data.id] = 'author';
+            console.log(old_posts)
+            docRef = await setDoc(doc(db, "users", author), 
             {
-                posts: posts.assign({[data.id]: 'author'})
+                posts: old_posts
             }
-        ).then(() => { result(data) });
+            ).then(() => { result(post_data) });
+        }
     });
 }
 
