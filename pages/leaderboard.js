@@ -28,9 +28,7 @@ const Leaderboard = () => {
             else{
                 users[index]['postrating'] = postrating;
             }
-            for(let comment in users[index]['comments']){
-                users[index]['comments'][comment] = Math.floor(Math.random() * 10) + 1;
-            }
+            users[index]['commentrating'] = Math.floor(Math.random() * 10) + 1;
         }
     }
     const renderList = (users, type) => {
@@ -80,7 +78,7 @@ const Leaderboard = () => {
             }
             //users is a list of dictionaries of user data
             idsToRatings(users).then(() =>{
-                console.log(users[0]['postrating']);
+                console.log(users);
             
             //each user data now has a postrating and commentrating field
 
