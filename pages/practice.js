@@ -39,10 +39,9 @@ const Practice = ({user}) => {
 		
 	}
     }
-    const generateReturns = () => { 
+    const generate = () => { 
 	let numPosts=0;
-        console.log("here");
-	
+	let netVotes=0;
         if(ret != null){
             return;
         }
@@ -56,11 +55,18 @@ const Practice = ({user}) => {
                 posts.push(res[index].data.title);
 		bodies.push(res[index].data.body);
 		numPosts++;
+		if(res[index].data.score.up!=0){
+			netVotes+=res[index].data.score.up;
+			
+		}
+		if(res[index].data.score.down!=0){
+			netVotes-=res[index].data.score.down;
+		}
 		}
             }
-            //users is a list of dictionaries of user data
             console.log(posts);
         
+	    console.log(netVotes);
             const postLeaderboard = 
             <div class='postboard'>
                 <h1 class='posttitle'></h1>
@@ -74,13 +80,13 @@ const Practice = ({user}) => {
 	<div class={'grid top'}>
    <div>
      <h1>Profile Picture</h1>
-     <button onClick={()=> window.location.hash = 'home'}> <img src={'ghost.png'} />
+     <button onClick={()=> window.location.hash = 'Profile'}> <img src={'ghost.png'} />
        <div class="username">{user.username}</div>
      </button>
    </div>
    <div>
-     <h1>About Me</h1>
-     <div class={'container border'}> Username: {user.username} <br></br> Name: {user.firstname} {user.lastname} <br></br> Number of Posts: {numPosts}
+     <center><h1>About Me</h1></center>
+     <div class={'container border'}> Username: {user.username} <br></br> Name: {user.firstname} {user.lastname} <br></br> Number of Posts: {numPosts}<br></br> Net Post Votes: {netVotes}
 	<ul>
                 </ul>
      </div>
@@ -94,7 +100,7 @@ const Practice = ({user}) => {
             setReturn(retVal);
         })
     }
-    generateReturns();
+    generate();
     return(ret);
  }
   

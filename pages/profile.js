@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 
-const ProfileSmall = ({user}) => {
+const ProfileSmall = ({user,setPage}) => {
 
     return (
       <div class="profile small">
