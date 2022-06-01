@@ -56,17 +56,14 @@ const Practice = ({user}) => {
 		bodies.push(res[index].data.body);
 		numPosts++;
 		if(res[index].data.score.up!=0){
-			netVotes+=res[index].data.score.up;
+			netVotes+=res[index].data.score.up.length;
 			
 		}
 		if(res[index].data.score.down!=0){
-			netVotes-=res[index].data.score.down;
+			netVotes-=res[index].data.score.down.length;
 		}
 		}
             }
-            console.log(posts);
-        
-	    console.log(netVotes);
             const postLeaderboard = 
             <div class='postboard'>
                 <h1 class='posttitle'></h1>
