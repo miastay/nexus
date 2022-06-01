@@ -14,12 +14,15 @@ function Index() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-      if(!user) { setUser(isSignedIn()) };
+        if(!user) { setUser(isSignedIn()) };
+        if(window.location.hash != page) {
+          setPage(window.location.hash.substr(1))
+        }
   });
 
   const changePage = (page) => {
-      setPage(page);
-      window.location.hash = page;
+        setPage(page);
+        window.location.hash = page;
   }
 
 return (
@@ -32,7 +35,7 @@ return (
                     {(page === 'post') && <Poster user={user} setPage={changePage} />}
                     {(page.startsWith('posts')) && <Posts id={window.location.hash.substring(window.location.hash.indexOf("id=")+3)} user={user} setPage={changePage}/>}
                     {(page === 'leaderboard') && <Leaderboard />}
-                    {(page==='Profile') && <Practice user={user}/>}
+                    {(page === 'profile') && <Practice user={user}/>}
                </div>
             </>
         }

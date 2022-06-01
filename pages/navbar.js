@@ -24,7 +24,7 @@ const Navbar = ({user, setPage, currentPage}) => {
                 
                 </div>
                 <div class="right">
-                    <Navpage page="Profile" setPage={setPage} currentPage={currentPage}/>
+                    <ProfileSmall user={user} setPage={setPage} currentPage={currentPage}/>
                 </div>
             </div>
         </div>

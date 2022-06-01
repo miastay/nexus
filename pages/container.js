@@ -6,13 +6,14 @@ const Container = ({type, modules, query, refresh, comments}) => {
     const testQuery = (querystr, props) => {
         let score = 0;
         let score_threshold = 2;
+        querystr = querystr.toLowerCase()
         let query_arr = querystr.split(' ');
         for(var q of query_arr) {
-            if(props.title.indexOf(q) != -1) 
+            if(props.title.toLowerCase().indexOf(q) != -1) 
                 { score += 2; break; } 
-            else if(props.body.indexOf(q) != -1)
+            else if(props.body.toLowerCase().indexOf(q) != -1)
                 { score += 2; break; } 
-            else if(props.author.indexOf(q) != -1) 
+            else if(props.author.toLowerCase().indexOf(q) != -1) 
                 { score += 2; break; } 
             else { score--; }
         }

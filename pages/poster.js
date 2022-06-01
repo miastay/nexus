@@ -59,7 +59,9 @@ const Poster = ({user, setPage}) => {
         <div class={'grid poster'}>
             <div class={'container border'}>
                 <h2>Create a Post</h2><br/><br/>
-                {posted != -1 && <div class="message confirmation">Post submitted successfully. <a href="" onClick={() => setPage(`posts?id=${posted}`)}>{"Go to the post >>"}</a></div>}
+                {posted != -1 && <div class="message confirmation">Post submitted successfully. <span class="postlink" onClick={() => {
+                    setPage(`posts?id=${posted}`);
+                }}>{"Go to the post >>"}</span></div>}
                 {error && <div class="message error">{error}</div>}
                 {postForm}
             </div>

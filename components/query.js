@@ -57,7 +57,7 @@ export async function addPost({title, author, body, result}) {
 }
 
 export async function getPost({id}) {
-    console.log("get one");
+    console.log("get one " + id);
     try {
         const docRef = doc(db, 'posts', id);
         const docSnap = await getDoc(docRef);
@@ -79,6 +79,38 @@ export async function getPosts() {
         docs.push({'id': doc.id, 'data': doc.data()});
     });
     return docs;
+}
+
+export async function updatePost({id, data}) {
+    try {
+        const docRef = await setDoc(doc(db, "posts", id), 
+        {
+            title: data.title,
+            author: data.author,
+            body: data.body,
+            date: data.date,
+            score: data.score
+        }
+        ).then((data) => { console.log("updated post"); return data });
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export async function tryVote({id, delta}) {
+    getPost({id: id}).then((data) => { 
+        let arr = ( delta == 1 ? data.score.up : data.score.down );
+        let username = isSignedIn().username;
+        if(arr.includes(username)) { 
+            arr.splice(arr.indexOf(username), 1)
+        } else {
+            arr.push(username)
+        }
+        if (delta == 1) { data.score.up = arr; } else { data.score.down = arr; }
+        // now, use the new array to update the post data in the DB:
+        updatePost({id: id, data: data}).then((res) => { return res })
+    })
+    // 
 }
 
 //////////////////
