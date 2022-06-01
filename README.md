@@ -71,9 +71,10 @@ The backend is supported by a persistent database running through Firebase.
 `git clone https://github.com/rytaylor/nexus.git`
 2. In the installed directory, install the associated node dependencies:
 `npm i`
-3. Place the provided config file `config.js` into the `nexus/components` directory.
-3. To run the application locally, type `npm run dev`.
-4. Point your browser to `localhost:3000`.
+3. Ensure that `config.js` is in the `nexus/components` directory.
+    > secrets in `config.js` were kept in the .gitignore, but were committed before submission for simplicity.
+4. To run the application locally, type `npm run dev`.
+5. Point your browser to `localhost:3000`.
 
 ## Contributors
 Ryan Taylor, Saayujh Ramanathan, Aaryaman Bhute
