@@ -13,7 +13,7 @@ const Navbar = ({user, setPage, currentPage}) => {
 
     return (
         <div class="nav">
-          <div class="left">
+          <div class="left" onClick={() => { setPage('home') }}>
               <Logo />
           </div>
           <div class="mid">
