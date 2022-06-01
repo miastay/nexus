@@ -107,8 +107,7 @@ h1, h2, h3 {
         }
     }
     .right {
-	align:left;
-        width: 40%;
+        width: 16%;
         height: 100%;
         display: grid;
         .btn {
@@ -164,8 +163,22 @@ h1, h2, h3 {
         max-height: 100%;
         overflow: hidden;
     }
-    &.post {
+    &.posts {
         grid-template-columns: 1fr 8fr 4fr;
+        grid-gap: $padding-dbl;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+    }
+    &.post {
+        grid-template-columns: 8fr 4fr;
+        grid-gap: $padding-dbl;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+    }
+    &.poster {
+        grid-template-columns: 10fr;
         grid-gap: $padding-dbl;
         height: 100%;
         max-height: 100%;
@@ -191,6 +204,10 @@ h1, h2, h3 {
         overflow-y: scroll;
         height: 80vh;
     }
+}
+.module_wrapper {
+    height: 100%;
+    overflow-y: hidden;
 }
 
 .module {
@@ -293,6 +310,7 @@ h1, h2, h3 {
                 font-size: 150%;
                 height: 100%;
                 width: 100%;
+                padding-left: $padding-hlf;
             }
         }
     }
@@ -312,8 +330,15 @@ h1, h2, h3 {
     }
     .body {
         width: 100%;
-        height: 40%;
-        margin-bottom: calc(3 * $padding);
+        margin-bottom: calc(1.5 * $padding);
+        textarea {
+            padding: $padding-hlf;
+            font-size: larger;
+            max-width: 100%;
+            width: 40%;
+            min-width: 40%;
+            min-height: 100px;
+        }
     }
     .submit {
         width: 20%;
@@ -321,7 +346,7 @@ h1, h2, h3 {
         font-size: medium;
     }
     input {
-        padding: $padding;
+        padding: $padding-hlf;
         font-size: larger;
         width: 100%;
         height: 100%;
@@ -346,25 +371,25 @@ h1, h2, h3 {
 
 ////////////////////////
 
-.postwrapper{
+.leaderwrapper{
     display: flex;
-    height: 34%;
+    height: 100%;
     justify-content: center;
     width: 100%;
     flex-wrap: wrap;
     column-gap: 50px;
 }
 
-.postboard{
+.leaderboard{
     display: flex;
     justify-content: center;
     align-content: flex-start;
     flex-wrap: wrap;
-    height: 200%;
+    height: 100%;
     width: 40%;
 }
 
-.postboard ul{
+.leaderboard ul{
     list-style-type: None;
     padding-left: 0%;
     min-width: 30%;
@@ -374,11 +399,11 @@ h1, h2, h3 {
     max-height: 85%;
     overflow-y: scroll;
 }
-.postboard ul li{
+.leaderboard ul li{
     color: white;
 }
 
-.postentry{
+.leaderentry{
     display: flex;
     background-color: $color-2;
     padding: 1%;
@@ -389,15 +414,15 @@ h1, h2, h3 {
     border-radius: 30px;
 }
 
-.postentry img{
+.leaderentry img{
     width: 30%;
-    height: 40%;
+    height: auto;
     border-radius: 50%;
     border: 2px solid black;
     margin: 2px;
 }
 
-.postentry .description .name{
+.leaderentry .description .name{
     width: 100%;
     color: black;
     font-weight: 900;
@@ -408,14 +433,14 @@ h1, h2, h3 {
     text-align: center;
 }
 
-.postentry .description{
+.leaderentry .description{
     margin-left: 2%;
     height: fit-content;
     padding: 0;
     width: 65%;
 }
 
-.posttitle{
+.leadertitle{
     width: 100%;
     text-align: center;
     height: fit-content;
@@ -457,10 +482,10 @@ h1, h2, h3 {
     text-align: center;
     color: black;
     font-weight: 900;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 
-.postpagetitle{
+.leaderpagetitle{
     font-size: 2.5em;
     width: 100%;
     text-align: center;
@@ -498,6 +523,7 @@ h1, h2, h3 {
         &.tall {
             min-height: 35%;
         }
+        transition: min-height 0.5s ease;
         align-self: center;
         background: $color-5;
         box-shadow: inset 0px 0px 2px $shadow;
@@ -533,7 +559,7 @@ h1, h2, h3 {
             color: $color-5;
             border: none;
             &.grayed {
-                background: $color-7;
+                background: $color-8;
                 color: $color-5;
             }
         }
