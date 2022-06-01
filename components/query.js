@@ -32,13 +32,7 @@ export async function addPost({title, author, body, result}) {
             date: Timestamp.fromDate(new Date()),
             score: {'up': [], 'down': []}
         }
-    ).then((data) => {
-        docRef = await setDoc(doc(db, "users", author), 
-            {
-                posts: posts.assign({[data.id]: 'author'})
-            }
-        ).then(() => { result(data) });
-    });
+    ).then((data) => {result(data) });
 }
 
 export async function getPost({id}) {

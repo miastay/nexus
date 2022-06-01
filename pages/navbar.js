@@ -12,32 +12,23 @@ const Navpage = ({page, setPage, currentPage}) => {
 const Navbar = ({user, setPage, currentPage}) => {
 
     return (
-        <div class="nav">
-          <div class="left" onClick={() => { setPage('home') }}>
-              <Logo />
-          </div>
-          <div class="mid">
-              <Navpage page="home" setPage={setPage} currentPage={currentPage}/>
-              <Navpage page="post" setPage={setPage} currentPage={currentPage}/>
-              <Navpage page="page" setPage={setPage} currentPage={currentPage}/>
-              <Navpage page="leaderboard" setPage={setPage} currentPage={currentPage}/>
-          </div>
-          <div class="right">
-              <ProfileSmall user={user} />
-          </div>
+        <div>
+            <div class="nav">
+                <div class="left" onClick={() => { setPage('home') }}>
+                    <Logo />
+                </div>
+                <div class="mid">
+                    <Navpage page="home" setPage={setPage} currentPage={currentPage}/>
+                    <Navpage page="post" setPage={setPage} currentPage={currentPage}/>
+                    <Navpage page="posts" setPage={setPage} currentPage={currentPage}/>
+                    <Navpage page="last one" setPage={setPage} currentPage={currentPage}/>
+                
+                </div>
+                <div class="right">
+                    <Navpage page="Profile" setPage={setPage} currentPage={currentPage}/>
+                </div>
+            </div>
         </div>
-        <div class="mid">
-            <Navpage page="home" setPage={setPage} currentPage={currentPage}/>
-            <Navpage page="post" setPage={setPage} currentPage={currentPage}/>
-            <Navpage page="posts" setPage={setPage} currentPage={currentPage}/>
-            <Navpage page="last one" setPage={setPage} currentPage={currentPage}/>
-		
-        </div>
-        <div class="right">
-            <Navpage page="Profile" setPage={setPage} currentPage={currentPage}/>
-        </div>
-	
-      </div>
     )
  }
   

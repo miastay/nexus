@@ -4,7 +4,6 @@ import Home from './home';
 import Poster from './poster';
 import Leaderboard from './leaderboard';
 import Posts from './posts';
-import Leaderboard from './leaderboard';
 import Practice from './practice';
 import { useEffect } from 'react';
 import { isSignedIn } from '../components/query.js';
