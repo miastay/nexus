@@ -14,37 +14,30 @@ const Leaderboard = () => {
     }
     const idsToRatings = async (users) =>{
         for(let index in users){
+            let postrating = 0;
+            let numPosts = 0;
             for(let post in users[index]['posts']){
-                users[index]['posts'][post] = Math.floor(Math.random() * 10) + 1;
-                //let post = await getPost(users[index]['posts'][0]);
-                //console.log(post);
+                let p = await getPost({id:post});
+                let score = p['score']['up'].length - p['score']['down'].length;
+                numPosts += 1;
+                postrating += score;
+            }
+            if(numPosts === 0){
+                users[index]['postrating'] = "N/A";
+            }
+            else{
+                users[index]['postrating'] = postrating;
             }
             for(let comment in users[index]['comments']){
                 users[index]['comments'][comment] = Math.floor(Math.random() * 10) + 1;
             }
         }
     }
-    const addRatings = (users) =>{
-        for(let index in users){
-            if(users[index]['posts'].length == 0){
-                users[index]['postrating'] = "N/A";
-            }
-            else{
-                users[index]['postrating'] = users[index]['posts'].reduce((a, b) => a + b, 0);
-            }
-            if(users[index]['comments'].length == 0){
-                users[index]['commentrating'] = "N/A";
-            }
-            else{
-                users[index]['commentrating'] = users[index]['comments'].reduce((a, b) => a + b, 0);
-            }
-            
-        }
-    }
     const renderList = (users, type) => {
         const listItems = []
         if(type){
             for(let index in users){
+                console.log(users[index]['postrating']);
                 listItems.push(
                 <li>
                     <div class="leaderentry">
@@ -88,7 +81,6 @@ const Leaderboard = () => {
             }
             //users is a list of dictionaries of user data
             idsToRatings(users);
-            addRatings(users);
             //each user data now has a postrating and commentrating field
     
             const postSortedUsers = users.sort((a, b) => b["postrating"] - a["postrating"]);
