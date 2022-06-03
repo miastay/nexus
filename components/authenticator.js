@@ -23,6 +23,7 @@ const LogInModule = () => {
             else {
                 // we have successfully logged in; redirect to the home page.
                 console.log("signed in")
+                window.location.hash = "home";
                 window.location.reload();
             }
         });
